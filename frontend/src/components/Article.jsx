@@ -40,7 +40,7 @@ function Article() {
             ))}
         </div>
         <div className="flex justify-center items-center">
-            <button className="flex justify-center items-center px-3 py-2 bg-btn2 rounded text-white font-semibold">
+            <button className="flex justify-center items-center px-3 py-2 bg-black rounded cursor-pointer text-white font-semibold">
             More articles
             </button>
         </div>

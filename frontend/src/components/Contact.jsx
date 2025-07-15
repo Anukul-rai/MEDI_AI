@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { toast } from 'react-toastify';
 
 function Contact() {
     const [formData, setFormData] = useState({ name: '', email: '', phone: '', details: '' });
@@ -10,12 +11,13 @@ function Contact() {
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log('Form Data:', formData);
+        toast.success('Message sent successfully!');
     };
 
     return (
-        <section className="min-h-screen bg-white py-10 -mb-40  min-w-full ">
-        <div className='border-t-2 border-black max-w-7xl mx-auto pt-8'>
-            <h2 className="text-4xl font-bold text-center my-5">Contact Us</h2>
+        <section className="min-h-screen bg-white py-5 -mb-40  min-w-full ">
+        <div className='border-t-2 border-[#51829B] max-w-7xl mx-15 pt-8'>
+            <h2 className="text-4xl font-bold text-center text-[#51829B] my-5">Contact Us</h2>
         
         <div className="max-w-5xl mx-auto flex flex-row justify-between items-center">
             

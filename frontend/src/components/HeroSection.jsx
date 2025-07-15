@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 function HeroSection() {
   return (
-    <div className="w-full h-[450px] overflow-hidden font-text relative ">
+    <div className="w-full h-[450px] overflow-hidden font-text relative  ">
       <img className="absolute top-5 right-52" src="/pill.png" alt="" />
       <img className="absolute top-10 left-52" src="/y_pill.png" alt="" />
       <img

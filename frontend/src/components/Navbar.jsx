@@ -55,7 +55,7 @@ function NavBar() {
     };
 
     return (
-        <div className="w-full h-[70px] flex justify-between items-center  z-20 font-text sticky top-0  bg-[#59889f] p-5  ">
+        <div className="w-full h-[70px] flex justify-between items-center  z-20 font-text sticky top-0  bg-[#365666] p-5  ">
         <div className="flex items-center space-x-3 mx-1 md:mx-5">
             <div>
             <button
@@ -81,7 +81,7 @@ function NavBar() {
                         animate="enter"
                         exit="exit"
                         initial="initial"
-                        className="flex justify-center py-2 px-3 rounded-sm cursor-pointer capitalize hover:bg-[#59889f]"
+                        className="flex justify-center py-2 px-3 rounded-sm cursor-pointer capitalize hover:bg-[#365666] hover:text-white  "
                         key={item.id}
                     >
                         <Link

@@ -11,7 +11,7 @@ import Footer from "../components/Footer";
 
 function HomePage() {
   return (
-    <div className="w-full h-full bg-[#fffff4] overflow-hidden">
+    <div className="w-full h-full bg-[#f4f4f3] overflow-hidden">
         <div>
         <div className="w-full h-screen ">
             <HeroSection />   

@@ -35,11 +35,11 @@ function Login() {
 
           if (data.success) {
             // Handle successful login
-            login(values.email)
+            login(values.email) // Stores user in context
             toast.success("Login successful!");
             navigate("/predict"); // Redirect to the predict page
           } else {
-            setError(data.message);
+            setError(data.message); // Show error from backend
             toast.error("Login failed. Please check your credentials.");
           }
         } catch (error) {
