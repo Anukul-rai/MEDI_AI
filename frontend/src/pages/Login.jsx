@@ -53,8 +53,8 @@ function Login() {
     
 
   return (
-    <div className="relative flex flex-col justify-center items-center  w-full md:h-[500px] bg-lightBackground font-text h-[700px]">
-      <div className="rounded shadow-md shadow-gray-400 mx-10">
+    <div className="relative flex flex-col justify-center items-center  w-full md:h-[500px] bg-[#fffff4] font-text h-[700px]">
+      <div className="rounded shadow-md shadow-gray-400 mx-10 bg-white/40">
         <div className="">
           <h1 className="font-bold capitalize text-4xl justify-center items-center flex  p-7 text-lightText">
             login

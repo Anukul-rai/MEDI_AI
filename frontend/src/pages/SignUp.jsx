@@ -16,8 +16,7 @@ function Signup() {
     confirm_password: "",
     age: "",
     gender: "",
-    city: "",
-    state: "",
+    city: ""
   };
 
   const navigate = useNavigate();
@@ -38,18 +37,15 @@ function Signup() {
             },
             body: JSON.stringify(values),
           });
-
           const data = await response.json();
-
           if (data.success) {
-           
             toast.success("Registered successfully!");
             setSignup(true);
           } else {
             setError(data.message);
           }
         } catch (error) {
-          // console.error("Error during signup:", error);
+          console.error("Error during signup:", error);
           setError("An error occurred during signup");
           toast.error("Registration Failed!");
         }
@@ -62,15 +58,15 @@ function Signup() {
     return null;
   }
   return (
-    <div className="relative flex flex-col justify-center items-center  w-full md:h-[600px]  font-text h-[700px] mt-20 md:mt-0">
-      <div className="rounded shadow-md shadow-gray-400 mx-10 ">
+    <div className="relative flex flex-col justify-center items-center  w-full md:h-[600px]  font-text h-[700px] bg-[#fffff4]  mt-20 md:mt-0">
+      <div className="rounded shadow-md shadow-gray-400 mx-10 bg-white ">
         <div className="">
           <h1 className="font-semibold capitalize text-4xl  justify-center items-center flex  p-4 text-lightText">
             register
           </h1>
-          <p className="text-xs px-3 py-2 text-gray-700 font-semibold flex justify-center">
-            Join AI-Diseses Predictor for personalized wellness with just a click –
-            Register today!
+          <p className="text-sm px-3 py-2 text-gray-700 font-semibold flex flex-col justify-center items-center">
+            Join AI-Diseses Predictor for personalized wellness with <br/>
+          <span className="text-center">just a click -Register today!</span>
           </p>
         </div>
 
@@ -111,8 +107,8 @@ function Signup() {
                 ) : null}
               </div>
             </div>
-            <div className="px-6 mb-5">
-              {/* <label htmlFor="phone_number">Phone Number</label> */}
+              <div className="md:flex rounded-md  mb-5 px-4 text-gray-500">
+            <div className="flex flex-col px-2 py-2">
               <input
                 name="phone_number"
                 id="phone_number"
@@ -128,8 +124,24 @@ function Signup() {
                 <p className="text-sm text-red-700">{errors.phone_number}</p>
               ) : null}
             </div>
+              <div className="flex flex-col px-2 py-2 ">
+                <input
+                  name="city"
+                  id="city"
+                  type="text"
+                  placeholder="City"
+                  className="bg-transparent shadow-sm focus:outline-none shadow-gray-400 font-medium    px-4 py-2 w-full"
+                  value={values.city}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  autoComplete="off"
+                />
+                {errors.city && touched.city ? (
+                  <p className="text-sm text-red-700">{errors.city}</p>
+                ) : null}
+              </div>
+            </div>
             <div className="px-6 mb-5">
-              {/* <label htmlFor="email">Email Id</label> */}
               <input
                 name="email"
                 id="email"
@@ -180,40 +192,6 @@ function Signup() {
                 ) : null}
               </div>
             </div>{" "}
-            <div className="md:flex rounded-md  mb-5 px-4 text-gray-500">
-              <div className="flex flex-col px-2 py-2 ">
-                <input
-                  name="city"
-                  id="city"
-                  type="text"
-                  placeholder="City"
-                  className="bg-transparent shadow-sm focus:outline-none shadow-gray-400 font-medium    px-4 py-2 w-full"
-                  value={values.city}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  autoComplete="off"
-                />
-                {errors.city && touched.city ? (
-                  <p className="text-sm text-red-700">{errors.city}</p>
-                ) : null}
-              </div>
-              <div className="flex flex-col px-2 py-2 ">
-                <input
-                  name="state"
-                  id="state"
-                  type="text"
-                  placeholder="State"
-                  className="bg-transparent shadow-sm focus:outline-none shadow-gray-400 font-medium    px-4 py-2 w-full"
-                  value={values.state}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  autoComplete="off"
-                />
-                {errors.state && touched.state ? (
-                  <p className="text-sm text-red-700">{errors.state}</p>
-                ) : null}
-              </div>
-            </div>
             <div className=" md:flex rounded-md  mb-5 px-4">
               <div className="flex flex-col px-2 py-2">
                 {/* <label htmlFor="password">Password</label> */}
@@ -232,10 +210,6 @@ function Signup() {
                   <p className="text-sm text-red-700">{errors.password}</p>
                 ) : null}
               </div>
-              {/* <label htmlFor="confirm_password" className="">
-                Confirm Password
-              </label> */}
-
               <div className="flex flex-col px-2 py-2">
                 <input
                   name="confirm_password"
@@ -260,7 +234,7 @@ function Signup() {
             <p>
               Already have an account?
               <Link to="/login">
-                <span className="p-2 capitalize text-btn1 font-semibold">
+                <span className="p-2 capitalize text-[#EFBC9B] font-semibold">
                   log in
                 </span>
               </Link>
@@ -271,8 +245,7 @@ function Signup() {
               <button
                 type="submit"
                 onClick={handleSubmit}
-                className="capitalize bg-button font-semibold text-white bg-btn2 px-8 py-2 rounded"
-              >
+                className="capitalize cursor-pointer font-semibold text-white bg-[#93C6E7] px-8 py-2 rounded">
                 register
               </button>
             </Link>
