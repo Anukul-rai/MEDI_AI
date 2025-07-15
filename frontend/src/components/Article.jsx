@@ -36,7 +36,7 @@ function Blogs() {
         </div>
         <div className="flex md:w-[1000px] w-[400px] md:mx-10 md:space-x-5  my-5 overflow-x-scroll ">
             {articles.map((article) => (
-            <BlogCards key={article.id} article={article} />
+            <BlogCard key={article.id} article={article} />
             ))}
         </div>
         <div className="flex justify-center items-center">

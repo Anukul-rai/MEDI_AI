@@ -1,5 +1,3 @@
-import { motion } from "framer-motion";
-import React from "react";
 import { FaArrowRight } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
@@ -21,33 +19,25 @@ function HeroSection() {
       />
       <div className="w-full h-full">
         <div className="w-full flex items-center justify-center flex-col  h-full px-10">
-          <motion.span
-            // variants={fadeIn("down", 0.1)}
-            // initial="hidden"
-            // whileInView="show"
-            // viewport={{ once: false, amount: 0.2 }}
+          <span
             className="md:text-5xl text-3xl font-bold"
           >
             {" "}
             Disese-Predictor
-          </motion.span>
-          <motion.h1
-            // variants={fadeIn("down", 0.2)}
-            // initial="hidden"
-            // whileInView="show"
-            // viewport={{ once: false, amount: 0.2 }}
+          </span>
+          <h1
             className="md:text-2xl text-xs font-medium text-gray-600 "
           >
             "Transforming Symptoms into Smart Solutions"
-          </motion.h1>
+          </h1>
           <Link to='/login' className="mt-2 ">
-            <motion.button
+            <button
               whileTap={{ scale: 0.8 }}
               className="px-5 py-2 rounded-full bg-btn2 flex items-center hover:bg-sky-400"
             >
               Get Started
               <FaArrowRight className="ml-2" />
-            </motion.button>
+            </button>
           </Link>
         </div>
       </div>
