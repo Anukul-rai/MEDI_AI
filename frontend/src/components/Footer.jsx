@@ -17,10 +17,10 @@ function Footer() {
             <form action="">
                 <input
                 type="email"
-                placeholder="Email"
-                className="px-10 py-3 bg-white rounded focus:outline-none "
+                placeholder="Email..."
+                className="px-5 py-3 bg-white rounded focus:outline-none "
                 />
-                <button className="bg-btn2 px-3 py-2 md:mx-3 mx-1 rounded-lg">
+                <button className="bg-[#EFBC9B] px-3 py-3 md:mx-3 mx-1 rounded-lg">
                 Subscribe
                 </button>
             </form>

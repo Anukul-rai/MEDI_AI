@@ -26,7 +26,7 @@ function NavBar() {
 
     const toggleMenu = () => {
         setIsOpen(!isOpen);
-    };
+    }
     const menuSlide = {
         initial: {
         x: "-100%",
@@ -38,8 +38,8 @@ function NavBar() {
         exit: {
         x: "-100%",
         transition: { duration: 0.8, ease: [0.76, 0, 0.24, 1] },
-        },
-    };
+        }
+    }
     const slide = {
         initial: {
         x: "-100%",
@@ -72,7 +72,7 @@ function NavBar() {
                     animate="enter"
                     exit="exit"
                     initial="initial"
-                    className="absolute top-20 left-1 rounded-xl bg-[#EFBC9B] justify-center text-justify bg-opacity-80"
+                    className="absolute top-20 left-1 rounded-md bg-[#EFBC9B] justify-center text-justify bg-opacity-80"
                 >
                     {menuItems.map((item) => (
                     <motion.li
@@ -81,7 +81,7 @@ function NavBar() {
                         animate="enter"
                         exit="exit"
                         initial="initial"
-                        className="flex justify-center py-2 px-3 rounded-xl cursor-pointer capitalize hover:bg-[#59889f]"
+                        className="flex justify-center py-2 px-3 rounded-sm cursor-pointer capitalize hover:bg-[#59889f]"
                         key={item.id}
                     >
                         <Link
@@ -120,7 +120,7 @@ function NavBar() {
             </button>
             </div>
         ) : (
-            <div className="flex ">
+            <div className="flex gap-5 ">
             <Link to="/login">
                 <button className="flex items-center hover:bg-black/70 hover:text-amber-50  md:px-3 md:py-2 px-2 py-1 rounded-full bg-[#EFBC9B] cursor-pointer text-sm">
                 Login
