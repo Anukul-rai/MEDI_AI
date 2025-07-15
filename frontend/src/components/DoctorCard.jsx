@@ -80,7 +80,7 @@ function DoctorCard({
             <div className="flex">
             <div className="">
                 <img
-                src="https://assets-global.website-files.com/6426543485efe6a5ade36f21/64eeb730f28ad152d8d18244_Introducing-Dr.-Carewise--Your-Empathetic-3D-Animated-Doctor-gigapixel-standard-scale-6_00x.jpg"
+                src="https://i.pinimg.com/736x/06/b1/85/06b185e5b2322f1ab0557db59b554cd5.jpg"
                 alt=""
                 className="flex w-32 px-2 py-2 items-center rounded-full"
                 />
