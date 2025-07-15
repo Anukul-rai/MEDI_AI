@@ -1,5 +1,4 @@
-import BlogCards from "./BlogCards"
-
+import BlogCard from './BlogCard'
 function Blogs() {
     const articles = [
         {

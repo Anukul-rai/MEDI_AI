@@ -1,7 +1,7 @@
 import React from "react";
 // import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { fadeIn } from "../variants";
+import { fadeIn } from "../varients";
 
 const Service = () => {
     return (
