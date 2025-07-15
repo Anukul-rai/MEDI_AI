@@ -14,7 +14,7 @@ function Profile() {
     phoneNumber: "",
     email: "",
     address: "",
-    joiningDate: "06-06-24",
+    joiningDate: "07-06-25",
     image: "public/user.png",
     height: "",
     weight: "",
@@ -69,7 +69,6 @@ function Profile() {
 
   const handleSaveClick = () => {
     setIsEditing(false);
-    // Add logic to save the edited details
   };
 
   const handleChange = (e) => {
@@ -115,7 +114,7 @@ function Profile() {
             ))}
             <button
               onClick={handleSaveClick}
-              className="flex justify-center items-center bg-btn2 px-5 py-2 rounded mb-3"
+              className="flex justify-center items-center bg-[#818b91] px-5 py-2 rounded mb-3"
             >
               Save
             </button>
@@ -155,11 +154,11 @@ function Profile() {
           type="file"
           onChange={handleFileUpload}
           multiple
-          className="mb-4"
+          className="mb-4 bg-gray-200 p-2 rounded flex justify-start items-start w-60"
         />
         {uploadedFiles.length > 0 && (
           <div className="bg-gray-200 p-2 rounded">
-            <h3 className="text-lg font-bold mb-2">Uploaded Files</h3>
+            <h3 className="text-lg font-bold mb-2 bg-black/20">Uploaded Files</h3>
             <ul>
               {uploadedFiles.map((fileURL, index) => (
                 <li key={index} className="flex justify-between items-center">
@@ -186,14 +185,6 @@ function Profile() {
       </div>
     </div>
   );
-
-  // const renderAppointmentsSection = () => (
-  //   <div>
-  //     <h2 className="text-xl font-bold mb-2">Appointments</h2>
-  //     {/* Add appointment details or management here */}
-  //   </div>
-  // );
-
   return (
     <div className="w-full font-text flex">
       {/* Left side */}
