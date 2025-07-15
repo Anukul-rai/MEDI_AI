@@ -5,7 +5,7 @@ function FAQ() {
         <div className="md:h-full h-screen w-full font-text my-10">
         <div className="">
             <div className=" p-8">
-            <h2 className="mb-16 h text-4xl font-extrabold leading-9 border-b-2 text-lightText border-lightText">
+            <h2 className="mb-16 h text-4xl font-extrabold leading-9 border-b-2 text-[#51829B] border-[#51829B]">
                 FAQs
             </h2>
             <div className="flex h-full justify-between flex-col md:flex-row">

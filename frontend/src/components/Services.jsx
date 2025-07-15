@@ -1,5 +1,3 @@
-import React from "react";
-// import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { fadeIn } from "../varients";
 
@@ -10,7 +8,7 @@ const Service = () => {
             <div className="-mx-2 flex flex-wrap">
             <div className="w-full px-4 font-nunito text-light_text dark:text-dark_text">
                 <div className="mx-auto mb-12 max-w-[510px] text-center lg:mb-10">
-                <h2 className="text-lightText mb-3 text-3xl font-extrabold  sm:text-4xl md:text-[40px] font-playfair">
+                <h2 className="text-[#51829B] mb-3 text-3xl font-extrabold  sm:text-4xl md:text-[40px] font-playfair">
                     What We Offer?
                 </h2>
                 <p className="text-xs md:text-sm text-gray-700 ">

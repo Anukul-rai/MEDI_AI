@@ -1,5 +1,5 @@
 import BlogCard from './BlogCard'
-function Blogs() {
+function Article() {
     const articles = [
         {
         id: 1,
@@ -48,4 +48,4 @@ function Blogs() {
     );
 }
 
-export default Blogs;
+export default Article;

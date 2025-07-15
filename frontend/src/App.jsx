@@ -5,7 +5,7 @@ import Login from "./pages/Login";
 import Signup from "./pages/SignUp";
 import PredictDisease from "./pages/PredictDisease";
 import Appointments from "./pages/Appointment";
-import Articles from "./pages/Articles";
+// import Articles from "./pages/Articles";
 import Profile from "./pages/Profile";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -29,19 +29,18 @@ function App() {
             />
             <Route
             path="/predict"
-            element={loggedIn ? <PredictDisease /> : <Navigate to="/login" />}
+            // element={loggedIn ? <PredictDisease /> : <Navigate to="/login" />}
+            element={<PredictDisease />}
             />
             <Route
             path="/book"
-            element={loggedIn ? <Appointments /> : <Navigate to="/login" />}
-            />
-            <Route
-            path="/article"
-            element={loggedIn ? <Articles /> : <Navigate to="/login" />}
+            // element={loggedIn ? <Appointments /> : <Navigate to="/login" />}
+            element={<Appointments />}
             />
             <Route
             path="/profile"
-            element={loggedIn ? <Profile /> : <Navigate to="/login" /> }
+            // element={loggedIn ? <Profile /> : <Navigate to="/login" /> }
+            element={<Profile />}
             />
         </Routes>
         <ToastContainer />

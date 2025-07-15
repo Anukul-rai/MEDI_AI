@@ -3,7 +3,7 @@ import HeroSection from "../components/HeroSection";
 import About from "../components/About";
 import Service from "../components/Services";
 import PageDivider from "../components/PD";
-import Blogs from '../components/Article'
+import Article from '../components/Article'
 import Testimonials from "../components/Testimonials";
 import Contact from "../components/Contact";
 import FAQ from "../components/FAQs";
@@ -11,7 +11,7 @@ import Footer from "../components/Footer";
 
 function HomePage() {
   return (
-    <div className="w-full h-full bg-lightBackground overflow-hidden">
+    <div className="w-full h-full bg-[#fffff4] overflow-hidden">
         <div>
         <div className="w-full h-screen ">
             <HeroSection />   
@@ -23,7 +23,7 @@ function HomePage() {
         </div>
         <PageDivider />
         <div className="md:mx-10">
-            <Blogs />
+            <Article />
             <Testimonials />
             <FAQ />
         </div>

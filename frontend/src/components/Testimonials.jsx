@@ -22,7 +22,7 @@ const testimonialsData = [
     },
     ];
 
-    function Testimonials() {
+function Testimonials() {
     const [currentTestimonialIndex, setCurrentTestimonialIndex] = useState(0);
 
     const handleNextClick = () => {
@@ -37,19 +37,16 @@ const testimonialsData = [
         );
     };
 
-    const { name, username, image, text } =
-        testimonialsData[currentTestimonialIndex];
+    const { name, username, image, text } = testimonialsData[currentTestimonialIndex];
 
     return (
         <div className="my-20 relative">
         <div className="w-full flex flex-col md:flex-row items-center justify-center px-5 py-5">
             <div className="md:w-1/3  w-full flex justify-center items-center">
             <h1 className="md:text-5xl text-3xl capitalize font-bold ml-5 mb-20 md:mb-0">
-                our happy <span className="text-lightText">clients</span>{" "}
+                our happy <span className="text-[#51829B]">clients</span>{" "}
             </h1>
             </div>
-            <div className="bg-purple-500 h-[300px] w-[300px] absolute bg-opacity-15 rounded-full blur-xl top-0 right-[15%] animate-pulse"></div>
-            <div className="bg-sky-500 h-[300px] w-[300px] absolute bg-opacity-15 rounded-full blur-xl top-5 right-0 animate-pulse"></div>
             <div className="w-2/3 ">
             <div className="w-full max-w-xl px-5 pt-5 pb-10 mx-auto text-gray-800 border  border-btn2 rounded-lg shadow-lg ">
                 <div className="w-full pt-1 pb-5 mx-auto -mt-16 text-center">

@@ -20,20 +20,19 @@ function HeroSection() {
       <div className="w-full h-full">
         <div className="w-full flex items-center justify-center flex-col  h-full px-10">
           <span
-            className="md:text-5xl text-3xl font-bold"
+            className="md:text-5xl text-3xl font-semibold"
           >
-            {" "}
             Disese-Predictor
           </span>
           <h1
-            className="md:text-2xl text-xs font-medium text-gray-600 "
+            className="md:text-2xl text-xs font-medium text-gray-500 "
           >
             "Transforming Symptoms into Smart Solutions"
           </h1>
           <Link to='/login' className="mt-2 ">
             <button
               whileTap={{ scale: 0.8 }}
-              className="px-5 py-2 rounded-full bg-btn2 flex items-center hover:bg-sky-400"
+              className="px-5 py-2 my-4 rounded-full bg-[#93C6E7] flex items-center hover:text-white hover:bg-[#403e3e]"
             >
               Get Started
               <FaArrowRight className="ml-2" />

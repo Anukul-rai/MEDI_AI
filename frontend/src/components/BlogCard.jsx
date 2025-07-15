@@ -1,5 +1,4 @@
 import { LiaEyeSolid } from "react-icons/lia";
-// import { Link } from "react-router-dom";
 
 function BlogCards({ article: { pic, title, link, views, author } }) {
     return (

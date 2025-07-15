@@ -155,7 +155,7 @@ export const doctors = [
   {
     id: 18,
     name: "Dr. R. M. Rimal",
-    city: "Ghorahi",
+    city: "jhapa",
     location: "Bus Park",
     Specialization: "Oncologist",
     rating: "4",
@@ -191,7 +191,7 @@ export const doctors = [
   {
     id: 22,
     name: "Dr. V. S. Rai",
-    city: "Besisahar  i",
+    city: "manang",
     location: "Milanchowk",
     Specialization: "Dermatologist",
     rating: "5",
@@ -218,7 +218,7 @@ export const doctors = [
   {
     id: 25,
     name: "Dr. Y. R. Tiwari",
-    city: "Imphal",
+    city: "jhapa",
     location: "Thangmeiband",
     Specialization: "Pediatrician",
     rating: "5",
@@ -227,7 +227,7 @@ export const doctors = [
   {
     id: 26,
     name: "Dr. Z. M. Naidu",
-    city: "Agra",
+    city: "jhapa",
     location: "Sikandra",
     Specialization: "Ophthalmologist",
     rating: "4",
@@ -236,7 +236,7 @@ export const doctors = [
   {
     id: 27,
     name: "Dr. A. N. Chawla",
-    city: "Ajmer",
+    city: "jhapa",
     location: "Kaisar Ganj",
     Specialization: "Gynecologist",
     rating: "5",
@@ -245,7 +245,7 @@ export const doctors = [
   {
     id: 28,
     name: "Dr. B. P. Thakur",
-    city: "Aligarh",
+    city: "jhapa",
     location: "Civil Lines",
     Specialization: "Oncologist",
     rating: "4",
@@ -254,7 +254,7 @@ export const doctors = [
   {
     id: 29,
     name: "Dr. C. L. Sethi",
-    city: "Amritsar",
+    city: "chitwan",
     location: "Ranjit Avenue",
     Specialization: "Psychiatrist",
     rating: "3",
@@ -263,7 +263,7 @@ export const doctors = [
   {
     id: 30,
     name: "Dr. D. K. Mehra",
-    city: "Aurangabad",
+    city: "taplejung",
     location: "CIDCO",
     Specialization: "Endocrinologist",
     rating: "5",
@@ -272,7 +272,7 @@ export const doctors = [
   {
     id: 31,
     name: "Dr. E. P. Khurana",
-    city: "Bareilly",
+    city: "taplejung",
     location: "Civil Lines",
     Specialization: "Cardiologist",
     rating: "4",
@@ -281,7 +281,7 @@ export const doctors = [
   {
     id: 32,
     name: "Dr. F. R. Aggarwal",
-    city: "Belgaum",
+    city: "taplejung",
     location: "Tilakwadi",
     Specialization: "Dermatologist",
     rating: "5",
@@ -290,7 +290,7 @@ export const doctors = [
   {
     id: 33,
     name: "Dr. G. N. Reddy",
-    city: "Bhavnagar",
+    city: "chitwan",
     location: "Waghawadi Road",
     Specialization: "Neurologist",
     rating: "3",
@@ -299,7 +299,7 @@ export const doctors = [
   {
     id: 34,
     name: "Dr. H. K. Rao",
-    city: "Bikaner",
+    city: "taplejung",
     location: "Rani Bazar",
     Specialization: "Orthopedic",
     rating: "4",
@@ -308,7 +308,7 @@ export const doctors = [
   {
     id: 35,
     name: "Dr. I. P. Chaudhary",
-    city: "Bilaspur",
+    city: "jhapa",
     location: "Link Road",
     Specialization: "Pediatrician",
     rating: "5",
@@ -317,7 +317,7 @@ export const doctors = [
   {
     id: 36,
     name: "Dr. J. L. Bhatia",
-    city: "Bokaro",
+    city: "chitwan",
     location: "Sector 4",
     Specialization: "Ophthalmologist",
     rating: "4",
@@ -326,7 +326,7 @@ export const doctors = [
   {
     id: 37,
     name: "Dr. K. M. Naik",
-    city: "Cuttack",
+    city: "chitwan",
     location: "Buxi Bazar",
     Specialization: "Gynecologist",
     rating: "5",
@@ -335,7 +335,7 @@ export const doctors = [
   {
     id: 38,
     name: "Dr. L. N. Roy",
-    city: "Dhanbad",
+    city: "jhapa",
     location: "Saraidhela",
     Specialization: "Oncologist",
     rating: "4",
@@ -344,7 +344,7 @@ export const doctors = [
   {
     id: 39,
     name: "Dr. M. P. Singh",
-    city: "Dharamshala",
+    city: "chitwan",
     location: "Kotwali Bazaar",
     Specialization: "Psychiatrist",
     rating: "3",
@@ -353,7 +353,7 @@ export const doctors = [
   {
     id: 40,
     name: "Dr. N. Q. Sharma",
-    city: "Faridabad",
+    city: "jhapa",
     location: "Sector 15",
     Specialization: "Endocrinologist",
     rating: "5",
@@ -362,7 +362,7 @@ export const doctors = [
   {
     id: 41,
     name: "Dr. O. R. Mathur",
-    city: "Gwalior",
+    city: "chitwan",
     location: "Phoolbagh",
     Specialization: "Cardiologist",
     rating: "4",
@@ -371,7 +371,7 @@ export const doctors = [
   {
     id: 42,
     name: "Dr. P. S. Desai",
-    city: "Haridwar",
+    city: "manang",
     location: "Shivalik Nagar",
     Specialization: "Dermatologist",
     rating: "5",
@@ -380,7 +380,7 @@ export const doctors = [
   {
     id: 43,
     name: "Dr. Q. T. Gupta",
-    city: "Hubli",
+    city: "manang",
     location: "Vidya Nagar",
     Specialization: "Neurologist",
     rating: "3",
@@ -389,7 +389,7 @@ export const doctors = [
   {
     id: 44,
     name: "Dr. R. V. Shetty",
-    city: "Jabalpur",
+    city: "chitwan",
     location: "Napier Town",
     Specialization: "Orthopedic",
     rating: "4",
@@ -398,7 +398,7 @@ export const doctors = [
   {
     id: 45,
     name: "Dr. S. W. Rao",
-    city: "Jalandhar",
+    city: "Lalitpur",
     location: "Model Town",
     Specialization: "Pediatrician",
     rating: "5",
@@ -407,7 +407,7 @@ export const doctors = [
   {
     id: 46,
     name: "Dr. T. X. Dubey",
-    city: "Jammu",
+    city: "manang",
     location: "Gandhi Nagar",
     Specialization: "Ophthalmologist",
     rating: "4",
@@ -425,19 +425,11 @@ export const doctors = [
   {
     id: 48,
     name: "Dr. V. Z. Reddy",
-    city: "Jhansi",
+    city: "janakpur",
     location: "Civil Lines",
     Specialization: "Oncologist",
     rating: "4",
     experience: "14",
-  },
-  {
-    id: 49,
-    name: "Dr. W. K. Pandey",
-    city: "Kakinada",
-    location: "Ramanayyapeta",
-    Specialization: "Psychiatrist",
-    rating: "3",
-    experience: "7",
-  },
+  }
+
 ];

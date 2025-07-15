@@ -203,7 +203,7 @@ function PredictDisease() {
   return (
     <div className="">
       <div className="w-full h-[200px] bg-img2 relative">
-        <div className="w-full h-full bg-black  bg-opacity-30 ">
+        <div className="w-full h-full bg-black/30  bg-opacity-30 ">
           <h1 className="flex flex-col justify-center items-center w-full h-full text-3xl font-bold text-gray-100">
             Advanced Disease Prediction{" "}
             <span className="font-semibold text-2xl italic text-gray-300">
@@ -219,7 +219,7 @@ function PredictDisease() {
       </div>
       <div className="w-full flex justify-between p-10  bg-gray-100">
         <div className="w-1/2 flex justify-center items-center">
-          <h2 className="text-lightText capitalize text-6xl">
+          <h2 className="text-[#51829B] capitalize text-6xl">
             How does it work?
           </h2>
         </div>
@@ -297,7 +297,7 @@ function PredictDisease() {
               <button
                 type="button"
                 onClick={handlePredict}
-                className="bg-btn2 px-4 py-2 rounded mt-5"
+                className="bg-[#93C6E7] cursor-pointer px-4 py-2 rounded mt-5"
               >
                 Predict
               </button>

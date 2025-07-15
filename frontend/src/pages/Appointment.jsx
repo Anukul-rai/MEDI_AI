@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import DoctorCard from "../components/DoctorCard";
 import { FaSearch } from "react-icons/fa";
+import DoctorCard from "../components/DoctorCard";
 import { doctors } from "../components/DoctorList";
 // import axios from "axios";
 // import { load } from "cheerio";
@@ -60,10 +60,10 @@ function DoctorRecommend() {
 
     return (
         <>
-        <div className="w-full h-full relative font-text bg-lightBackground">
+        <div className="w-full h-full relative font-text bg-[#fffff4]">
             <div className="w-full flex flex-col justify-center items-center">
-            <div className="w-full h-[350px] bg-right bg-doc bg-fixed ">
-                <div className="w-full h-full bg-black bg-opacity-60 flex flex-col justify-center items-center px-10">
+            <div className="w-full h-[350px] bg-right bg-doc bg-cover bg-fixed ">
+                <div className="w-full h-full bg-black/30 bg-opacity-60 flex flex-col justify-center items-center px-10">
                 <h1 className="text-6xl top-20 justify-start items-center text-white font-text font-bold">
                     Find Doctor
                 </h1>
@@ -73,7 +73,7 @@ function DoctorRecommend() {
                 </div>
             </div>
 
-            <div className="flex px-10 py-3 w-full mt-5 ">
+            <div className="flex px-10 py-3 w-full mt-5 items-center justify-center bg-black/30">
                 <div className="px-6 flex ">
                 <div className="px-4 ">
                     <select
@@ -90,8 +90,8 @@ function DoctorRecommend() {
                     <option value="Pediatrician">Pediatrician</option>
                     <option value="Orthopedic">Orthopedic</option>
                     <option value="Ophthalmologist">Ophthalmologist</option>
-                    <option value="Dentist">Dentist</option>
-                    <option value="ENT Specialist">ENT Specialist</option>
+                    <option value="Dentist">Psychiatrist</option>
+                    <option value="ENT Specialist">Pediatrician</option>
                     </select>
                 </div>
                 <div>
@@ -108,9 +108,10 @@ function DoctorRecommend() {
                     <option value="Taplejung">Taplejung</option>
                     <option value="Chitwan">Chitwan</option>
                     <option value="Janakpur">Janakpur</option>
-                    <option value="Kavre">Kavre</option>
                     <option value="Pokhara">Pokhara</option>
-                    <option value="Manang">Manang</option>
+                    <option value="Manang">Hetauda</option>
+                    <option value="Manang">Dharan</option>
+                    <option value="Manang">Pokhara</option>
                     </select>
                 </div>
                 <div className="flex justify-center items-center px-2">
@@ -125,7 +126,7 @@ function DoctorRecommend() {
                 </div>
             </div>
             </div>
-            <div className="mx-5 grid grid-cols-3">
+            <div className="mx-10 flex flex-row flex-wrap items-center justify-around gap-4">
             {doctors
                 .filter(
                 (doctor) =>

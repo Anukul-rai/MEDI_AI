@@ -55,7 +55,7 @@ function NavBar() {
     };
 
     return (
-        <div className="w-full h-[70px] flex justify-between items-center  z-20 font-text sticky top-0 bg-[#59889f] p-5  ">
+        <div className="w-full h-[70px] flex justify-between items-center  z-20 font-text sticky top-0  bg-[#59889f] p-5  ">
         <div className="flex items-center space-x-3 mx-1 md:mx-5">
             <div>
             <button
@@ -101,8 +101,8 @@ function NavBar() {
         </div>
         <div className="">
             <Link to="/">
-            <h1 className="cursor-pointer  uppercase md:text-4xl text-3xl font-semibold  font-logo text-[#EFBC9B]">
-                DI-PE
+            <h1 className="cursor-pointer   md:text-4xl text-3xl font-semibold font-['helvatica'] text-[#EFBC9B]">
+                Medi-AI
             </h1>
             </Link>
         </div>
