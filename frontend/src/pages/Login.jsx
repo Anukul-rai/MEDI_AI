@@ -106,12 +106,12 @@ function Login() {
               </Link>
             </p>
           </div>
-          <div className="flex justify-center p-4">
+          <div className="flex justify-center p-4 ">
             <Link>
               <button
                 type="submit"
                 onClick={handleSubmit}
-                className="capitalize bg-btn2  font-semibold text-white px-8 py-2 rounded"
+                className="capitalize bg-btn2  font-semibold text-white px-8 py-2 rounded bg-[#93C6E7]"
               >
                 login
               </button>

@@ -59,7 +59,7 @@ function Signup() {
   }
   return (
     <div className="relative flex flex-col justify-center items-center  w-full md:h-[600px]  font-text h-[700px] bg-[#fffff4]  mt-20 md:mt-0">
-      <div className="rounded shadow-md shadow-gray-400 mx-10 bg-white ">
+      <div className="rounded shadow-md shadow-gray-400 mx-10 bg-white mt-20">
         <div className="">
           <h1 className="font-semibold capitalize text-4xl  justify-center items-center flex  p-4 text-lightText">
             register

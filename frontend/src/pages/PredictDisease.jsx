@@ -184,9 +184,6 @@ function PredictDisease() {
       console.error("Error predicting disease:", error.message);
     }
   };
-
-  // hello
-
   const handleSymptomChange = (value, actionMeta) => {
     setSelectedSymptoms((prevState) => ({
       ...prevState,
