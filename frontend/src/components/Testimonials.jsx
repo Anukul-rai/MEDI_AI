@@ -3,24 +3,31 @@ import { GrNext, GrPrevious } from "react-icons/gr";
 
 const testimonialsData = [
     {
-        name: "Hari bahadur karki",
+        name: "Hari Bahadur Karki",
         username: "@hari.karki",
         image: "https://randomuser.me/api/portraits/men/2.jpg",
-        text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod justo ac erat sagittis, a dictum ipsum consequat.",
+        text: "I used Medi-AI to check my symptoms before visiting a doctor. It was incredibly accurate and gave me peace of mind. Highly recommend it!",
     },
     {
         name: "Sita Lamichhane",
         username: "@sita.llc",
         image: "https://randomuser.me/api/portraits/women/5.jpg",
-        text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod justo ac erat sagittis, a dictum ipsum consequat.",
+        text: "Booking appointments and checking health conditions has never been this easy. Medi-AI is fast, reliable, and easy to use.",
     },
     {
-        name: "David putra",
+        name: "David Putra",
         username: "@putra.dv",
         image: "https://randomuser.me/api/portraits/men/3.jpg",
-        text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod justo ac erat sagittis, a dictum ipsum consequat.",
+        text: "As someone who constantly travels, this app helps me stay informed about my health. It’s like carrying a mini-doctor in your pocket!",
     },
-    ];
+    {
+        name: "Anjali Sharma",
+        username: "@anjali.sharma",
+        image: "https://randomuser.me/api/portraits/women/65.jpg",
+        text: "I was skeptical at first, but Medi-AI gave me an early warning about a condition I later confirmed with my doctor. This app is a game-changer!",
+    }
+]
+
 
 function Testimonials() {
     const [currentTestimonialIndex, setCurrentTestimonialIndex] = useState(0);
@@ -74,13 +81,13 @@ function Testimonials() {
             </div>
             <div className="flex justify-center mt-5">
                 <button
-                className="mr-2 px-4 py-4 text-btn2 border-2 border-btn2 rounded-full"
+                className="mr-2 px-4 py-4 text-btn2 border-2 border-btn2 rounded-full cursor-pointer"
                 onClick={handlePrevClick}
                 >
                 <GrPrevious />
                 </button>
                 <button
-                className="px-4 py-4 text-btn2 border-2 border-btn2 rounded-full"
+                className="px-4 py-4 text-btn2 border-2 border-btn2 rounded-full cursor-pointer"
                 onClick={handleNextClick}
                 >
                 <GrNext />

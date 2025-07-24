@@ -30,17 +30,19 @@ function Article() {
     return (
         <div className="md:h-screen h-full flex justify-center items-center flex-col w-full ">
         <div className="w-full flex justify-center items-center md:my-10">
-            <h1 className="md:text-3xl text-lg text-gray-800 font-bold  tracking-wide ">
+            <h1 className="md:text-3xl text-lg text-[#365666] font-bold tracking-wide border-b border-b-blue-950">
             Read top articles from health experts
             </h1>
         </div>
-        <div className="flex md:w-[1000px] w-[400px] md:mx-10 md:space-x-5  my-5 overflow-x-scroll ">
+        <div className="flex md:w-[1000px] w-[400px] md:mx-10 md:space-x-5  my-5  ">
             {articles.map((article) => (
             <BlogCard key={article.id} article={article} />
             ))}
         </div>
         <div className="flex justify-center items-center">
-            <button className="flex justify-center items-center px-3 py-2 bg-black rounded cursor-pointer text-white font-semibold">
+            <button 
+            onClick={() => {window.open("https://www.practo.com/healthfeed", "_blank");}}
+            className="flex justify-center items-center px-3 py-2 bg-[#365666] hover:bg-[#879eaf] rounded cursor-pointer text-white font-semibold">
             More articles
             </button>
         </div>

@@ -60,15 +60,16 @@ function NavBar() {
     // Show loading state while Clerk initializes
     if (!isLoaded) {
         return (
-            <div className="w-full h-[70px] flex justify-center items-center z-20 font-text sticky top-0 bg-[#365666] p-5">
+            <div className="w-full h-[70px] flex justify-between items-center z-20 font-text sticky top-0 bg-[#365666] p-5">
                 <div className="text-[#EFBC9B]">Loading...</div>
             </div>
         );
     }
 
     return (
-        <div className="w-full h-[70px] flex justify-between items-center z-20 font-text sticky top-0 bg-[#365666] p-5">
-        <div className="flex items-center space-x-3 mx-1 md:mx-5">
+        <div className="w-full h-[70px] flex items-center justify-between z-20 font-text sticky top-0 bg-[#365666] px-5">
+            {/* left menu  */}
+        <div className="flex flex-1 items-center space-x-3 mx-1 md:mx-5">
             <div>
             <button
                 onClick={toggleMenu}
@@ -111,8 +112,8 @@ function NavBar() {
             </AnimatePresence>
             </div>
         </div>
-        
-        <div className="">
+        {/* logo */}
+        <div className="flex-1 flex justify-cente">
             <Link to="/">
             <h1 className="cursor-pointer md:text-4xl text-3xl font-semibold font-['helvatica'] text-[#EFBC9B]">
                 Medi-AI
@@ -121,7 +122,8 @@ function NavBar() {
         </div>
         
         {isSignedIn ? (
-            <div className="relative flex items-center gap-3 group">
+            <div className="relative flex items-center gap-3 ml-29 group">
+                {/* Profile Link */}
                 <Link to="/profile">
                 <img
                     src={user?.imageUrl || "/user.png"}
@@ -130,24 +132,24 @@ function NavBar() {
                 />
                 </Link>
 
-                {/* Logout button appears on hover */}
-                <div className="absolute top-12 -left-5 hidden group-hover:block z-50">
+                {/* Hover Logout */}
+                <div className="absolute top-12 left-1/2 transform -translate-x-1/2 hidden group-hover:flex z-50">
                 <SignOutButton>
-                    <button className="flex items-center hover:bg-black/70 hover:text-amber-50 md:px-3 md:py-2 px-2 py-1 rounded-full bg-[#EFBC9B] cursor-pointer text-sm">
+                    <button className="bg-[#EFBC9B] hover:bg-black/70 hover:text-amber-50 text-sm px-4 py-2 rounded-full shadow transition">
                     Logout
                     </button>
                 </SignOutButton>
                 </div>
             </div>
             ) : (
-            <div className="flex gap-5">
+            <div className="flex gap-3">
                 <Link to="/login">
-                <button className="flex items-center hover:bg-black/70 hover:text-amber-50 md:px-3 md:py-2 px-2 py-1 rounded-full bg-[#EFBC9B] cursor-pointer text-sm">
+                <button className="bg-[#EFBC9B] hover:bg-black/70 hover:text-amber-50 text-sm px-4 py-2 rounded-full transition">
                     Login
                 </button>
                 </Link>
                 <Link to="/signup">
-                <button className="flex items-center hover:bg-black/70 hover:text-amber-50 md:mx-2 mx-1 md:px-3 md:py-2 px-2 py-1 rounded-full bg-[#EFBC9B] cursor-pointer text-sm">
+                <button className="bg-[#EFBC9B] hover:bg-black/70 hover:text-amber-50 text-sm px-4 py-2 rounded-full transition">
                     Register
                 </button>
                 </Link>
