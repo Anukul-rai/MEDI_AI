@@ -4,11 +4,11 @@ import { Link } from "react-router-dom";
 
 function Login() {
   return (
-    <div className="min-h-screen flex flex-col justify-center items-center w-full bg-gradient-to-br from-[#fffff4] to-[#f0f8ff] font-text px-4 py-8">
-      <div className="w-full max-w-md rounded-2xl shadow-lg shadow-gray-300 bg-white/80 backdrop-blur-sm border border-white/20">
+    <div className="min-h-screen flex flex-col justify-center items-center w-full bg-gradient-to-br from-[#ffffff] to-[#f0f8ff] font-text px-4 -mt-8">
+      <div className="w-full max-w-md rounded-2xl shadow-lg shadow-gray-300 bg-black/20 backdrop-blur-sm border border-white/20  space-y-3 ">
         {/* Header Section */}
-        <div className="text-center pt-8 pb-4">
-          <h1 className="font-bold text-2xl md:text-3xl text-[#365666] mb-4">
+        <div className="text-center pt-8 ">
+          <h1 className="font-bold text-2xl md:text-3xl text-[#325465] mb-1">
             Welcome Back
           </h1>
           <p className="text-xs text-[#365666] font-medium px-6 leading-relaxed">
@@ -17,7 +17,7 @@ function Login() {
         </div>
 
         {/* Clerk SignIn Component */}
-        <div className="flex justify-center px-4 py-1">
+        <div className="flex justify-center px-4">
           <SignIn
             afterSignInUrl="/predict"
             signUpUrl="/signup"
@@ -27,7 +27,7 @@ function Login() {
                 card: "bg-white  rounded-xl p-6",
                 headerTitle: "hidden",
                 headerSubtitle: "hidden",
-                formFieldInput: "border border-gray-300 focus:border-[#93C6E7] focus:ring-2 focus:ring-[#93C6E7]/50 rounded-md px-3 py-2 transition",
+                formFieldInput: "border border-gray-300 focus:border-[#93C6E7] focus:ring-2 focus:ring-[#93C6E7]/50 rounded-md px-3 transition",
                 footerActionLink: "text-[#93C6E7] hover:text-[#7bb3d9] font-semibold",
                 identityPreviewText: "text-gray-600",
                 formFieldLabel: "text-gray-700 font-medium",
@@ -37,7 +37,7 @@ function Login() {
         </div>
 
         {/* Footer Link */}
-        <div className="flex justify-center text-[#365666] pb-8 px-6">
+        <div className="flex justify-center text-[#365666] pb-4 px-6 -pt-9">
           <p className="text-center text-sm">
             New to our platform?{" "}
             <Link to="/signup" className="group">
