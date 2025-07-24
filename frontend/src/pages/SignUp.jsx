@@ -52,10 +52,6 @@ function Signup() {
           </p>
         </div>
       </div>
-      
-      {/* Decorative Elements */}
-      <div className="absolute top-10 right-10 w-24 h-24 bg-[#93C6E7]/10 rounded-full blur-xl"></div>
-      <div className="absolute bottom-10 left-10 w-28 h-28 bg-[#7bb3d9]/10 rounded-full blur-xl"></div>
     </div>
   );
 }
