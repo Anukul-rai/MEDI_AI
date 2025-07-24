@@ -5,53 +5,110 @@ import Login from "./pages/Login";
 import Signup from "./pages/SignUp";
 import PredictDisease from "./pages/PredictDisease";
 import Appointments from "./pages/Appointment";
-// import Articles from "./pages/Articles";
 import Profile from "./pages/Profile";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useAuth, AuthProvider } from "./context/AuthContext";
+import { useAuth } from '@clerk/clerk-react';
+
+// Protected Route Component
+function ProtectedRoute({ children }) {
+  const { isSignedIn, isLoaded } = useAuth();
+  
+  // Show loading while Clerk initializes
+  if (!isLoaded) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <div>Loading...</div>
+      </div>
+    );
+  }
+  
+  // Redirect to login if not signed in
+  if (!isSignedIn) {
+    return <Navigate to="/login" replace />;
+  }
+  
+  return children;
+}
+
+// Public Route Component (redirects to home if already signed in)
+function PublicRoute({ children }) {
+  const { isSignedIn, isLoaded } = useAuth();
+  
+  if (!isLoaded) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <div>Loading...</div>
+      </div>
+    );
+  }
+  
+  // Redirect to home if already signed in
+  if (isSignedIn) {
+    return <Navigate to="/" replace />;
+  }
+  
+  return children;
+}
 
 function App() {
-    const { loggedIn } = useAuth();
-
-    return (
-        <>
-        <Navbar />
-        <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route
-            path="/login"
-            element={loggedIn ? <Navigate to="/" /> : <Login />}
-            />
-            <Route
-            path="/signup"
-            element={loggedIn ? <Navigate to="/" /> : <Signup />}
-            />
-            <Route
-            path="/predict"
-            // element={loggedIn ? <PredictDisease /> : <Navigate to="/login" />}
-            element={<PredictDisease />}
-            />
-            <Route
-            path="/book"
-            // element={loggedIn ? <Appointments /> : <Navigate to="/login" />}
-            element={<Appointments />}
-            />
-            <Route
-            path="/profile"
-            // element={loggedIn ? <Profile /> : <Navigate to="/login" /> }
-            element={<Profile />}
-            />
-        </Routes>
-        <ToastContainer />
-        </>
-    );
+  return (
+    <>
+      <Navbar />
+      <Routes>
+        {/* Public routes */}
+        <Route path="/" element={<HomePage />} />
+        
+        {/* Auth routes - redirect to home if already logged in */}
+        <Route
+          path="/login"
+          element={
+            <PublicRoute>
+              <Login />
+            </PublicRoute>
+          }
+        />
+        <Route
+          path="/signup"
+          element={
+            <PublicRoute>
+              <Signup />
+            </PublicRoute>
+          }
+        />
+        
+        {/* Protected routes - require authentication */}
+        <Route
+          path="/predict"
+          element={
+            <ProtectedRoute>
+              <PredictDisease />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/book"
+          element={
+            <ProtectedRoute>
+              <Appointments />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute>
+              <Profile />
+            </ProtectedRoute>
+          }
+        />
+        
+        {/* Catch all route */}
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+      <ToastContainer />
+    </>
+  );
 }
 
-export default function AppWrapper() {
-    return (
-        <AuthProvider>
-        <App />
-        </AuthProvider>
-    );
-}
+export default App;

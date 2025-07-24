@@ -4,10 +4,11 @@ import { CiMenuFries } from "react-icons/ci";
 import { RxCross2 } from "react-icons/rx";
 import { FaMoon, FaSun } from "react-icons/fa6";
 import { Link } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
+import { useAuth, useUser, SignOutButton } from "@clerk/clerk-react";
 
 function NavBar() {
-    const { loggedIn, logout } = useAuth();
+    const { isSignedIn, isLoaded } = useAuth();
+    const { user } = useUser();
 
     const menuItems = [
         {
@@ -20,13 +21,14 @@ function NavBar() {
         name: "book appointments",
         link: "/book",
         },
-        
     ];
+    
     const [isOpen, setIsOpen] = useState(false);
 
     const toggleMenu = () => {
         setIsOpen(!isOpen);
     }
+    
     const menuSlide = {
         initial: {
         x: "-100%",
@@ -40,6 +42,7 @@ function NavBar() {
         transition: { duration: 0.8, ease: [0.76, 0, 0.24, 1] },
         }
     }
+    
     const slide = {
         initial: {
         x: "-100%",
@@ -54,18 +57,27 @@ function NavBar() {
         },
     };
 
+    // Show loading state while Clerk initializes
+    if (!isLoaded) {
+        return (
+            <div className="w-full h-[70px] flex justify-center items-center z-20 font-text sticky top-0 bg-[#365666] p-5">
+                <div className="text-[#EFBC9B]">Loading...</div>
+            </div>
+        );
+    }
+
     return (
-        <div className="w-full h-[70px] flex justify-between items-center  z-20 font-text sticky top-0  bg-[#365666] p-5  ">
+        <div className="w-full h-[70px] flex justify-between items-center z-20 font-text sticky top-0 bg-[#365666] p-5">
         <div className="flex items-center space-x-3 mx-1 md:mx-5">
             <div>
             <button
                 onClick={toggleMenu}
-                className="flex items-center  hover:bg-black/70 hover:text-amber-50 md:px-3 md:py-2 px-2 py-1 rounded-full bg-[#EFBC9B] cursor-pointer text-sm">
+                className="flex items-center hover:bg-black/70 hover:text-amber-50 md:px-3 md:py-2 px-2 py-1 rounded-full bg-[#EFBC9B] cursor-pointer text-sm">
                 {isOpen ? <RxCross2 /> : <CiMenuFries />}
-                <h1 className="capitalize px-2 ">menu</h1>
+                <h1 className="capitalize px-2">menu</h1>
             </button>
 
-            <AnimatePresence >
+            <AnimatePresence>
                 {isOpen && (
                 <motion.ul
                     variants={menuSlide}
@@ -81,7 +93,7 @@ function NavBar() {
                         animate="enter"
                         exit="exit"
                         initial="initial"
-                        className="flex justify-center py-2 px-3 rounded-sm cursor-pointer capitalize hover:bg-[#365666] hover:text-white  "
+                        className="flex justify-center py-2 px-3 rounded-sm cursor-pointer capitalize hover:bg-[#365666] hover:text-white"
                         key={item.id}
                     >
                         <Link
@@ -99,40 +111,48 @@ function NavBar() {
             </AnimatePresence>
             </div>
         </div>
+        
         <div className="">
             <Link to="/">
-            <h1 className="cursor-pointer   md:text-4xl text-3xl font-semibold font-['helvatica'] text-[#EFBC9B]">
+            <h1 className="cursor-pointer md:text-4xl text-3xl font-semibold font-['helvatica'] text-[#EFBC9B]">
                 Medi-AI
             </h1>
             </Link>
         </div>
-        {loggedIn ? (
-            <div className="flex  items-center">
-            <Link to="/profile">
-                <button className="">
-                <img src="public/user.png" alt="" className="w-10" />
-                </button>
-            </Link>
-            <button onClick={logout}>
-                <button className="md:mx-2 mx-1 border-2 md:px-3 md:py-2 px-2 py-1 rounded-full border-btn1 cursor-pointer text-sm">
-                Logout
-                </button>
-            </button>
+        
+        {isSignedIn ? (
+            <div className="relative flex items-center gap-3 group">
+                <Link to="/profile">
+                <img
+                    src={user?.imageUrl || "/user.png"}
+                    alt="Profile"
+                    className="w-10 h-10 rounded-full object-cover cursor-pointer border-2 border-white"
+                />
+                </Link>
+
+                {/* Logout button appears on hover */}
+                <div className="absolute top-12 -left-5 hidden group-hover:block z-50">
+                <SignOutButton>
+                    <button className="flex items-center hover:bg-black/70 hover:text-amber-50 md:px-3 md:py-2 px-2 py-1 rounded-full bg-[#EFBC9B] cursor-pointer text-sm">
+                    Logout
+                    </button>
+                </SignOutButton>
+                </div>
             </div>
-        ) : (
-            <div className="flex gap-5 ">
-            <Link to="/login">
-                <button className="flex items-center hover:bg-black/70 hover:text-amber-50  md:px-3 md:py-2 px-2 py-1 rounded-full bg-[#EFBC9B] cursor-pointer text-sm">
-                Login
+            ) : (
+            <div className="flex gap-5">
+                <Link to="/login">
+                <button className="flex items-center hover:bg-black/70 hover:text-amber-50 md:px-3 md:py-2 px-2 py-1 rounded-full bg-[#EFBC9B] cursor-pointer text-sm">
+                    Login
                 </button>
-            </Link>
-            <Link to="/signup">
+                </Link>
+                <Link to="/signup">
                 <button className="flex items-center hover:bg-black/70 hover:text-amber-50 md:mx-2 mx-1 md:px-3 md:py-2 px-2 py-1 rounded-full bg-[#EFBC9B] cursor-pointer text-sm">
-                Register
+                    Register
                 </button>
-            </Link>
+                </Link>
             </div>
-        )}
+            )}
         </div>
     );
 }

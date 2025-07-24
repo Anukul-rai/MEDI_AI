@@ -1,258 +1,63 @@
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { useFormik } from "formik";
-import { signupSchema } from "../schema";
-import { toast } from "react-toastify";
-
-const API_BASE_URL = import.meta.env.VITE_API_URL;
+import React from "react";
+import { SignUp } from "@clerk/clerk-react";
+import { Link } from "react-router-dom";
 
 function Signup() {
-  const initialValues = {
-    first_name: "",
-    last_name: "",
-    phone_number: "",
-    email: "",
-    password: "",
-    confirm_password: "",
-    age: "",
-    gender: "",
-    city: ""
-  };
-
-  const navigate = useNavigate();
-  const [signup, setSignup] = useState(false);
-  const [error, setError] = useState(false);
-
-  // distructuring the values.
-  const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
-    useFormik({
-      initialValues: initialValues,
-      validationSchema: signupSchema,
-      onSubmit: async (values) => {
-        try {
-          const response = await fetch(`${API_BASE_URL}/signup`, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(values),
-          });
-          const data = await response.json();
-          if (data.success) {
-            toast.success("Registered successfully!");
-            setSignup(true);
-          } else {
-            setError(data.message);
-          }
-        } catch (error) {
-          console.error("Error during signup:", error);
-          setError("An error occurred during signup");
-          toast.error("Registration Failed!");
-        }
-      },
-    });
-
-  // redirect to login page.
-  if (signup) {
-    navigate("/login");
-    return null;
-  }
   return (
-    <div className="relative flex flex-col justify-center items-center  w-full md:h-[600px]  font-text h-[700px] bg-[#fffff4]  mt-20 md:mt-0">
-      <div className="rounded shadow-md shadow-gray-400 mx-10 bg-white mt-20">
-        <div className="">
-          <h1 className="font-semibold capitalize text-4xl  justify-center items-center flex  p-4 text-lightText">
-            register
+    <div className="min-h-screen flex flex-col justify-center items-center w-full bg-gradient-to-br from-[#fffff4] to-[#f0f8ff] font-text px-4 py-8">
+      <div className="w-full max-w-md rounded-2xl shadow-lg shadow-gray-300 bg-white/80 backdrop-blur-sm border border-white/20">
+        {/* Header Section */}
+        <div className="text-center pt-8 pb-4">
+          <h1 className="font-bold text-4xl md:text-5xl text-gray-800 mb-4">
+            Join Us Today
           </h1>
-          <p className="text-sm px-3 py-2 text-gray-700 font-semibold flex flex-col justify-center items-center">
-            Join AI-Diseses Predictor for personalized wellness with <br/>
-          <span className="text-center">just a click -Register today!</span>
+          <p className="text-sm text-gray-600 font-medium px-6 leading-relaxed">
+            Join AI-Disease Predictor for personalized wellness insights.
+            <br />
+            <span className="text-[#93C6E7] font-semibold">Register in just one click!</span>
           </p>
         </div>
 
-        <form>
-          <div className="flex flex-col justify-center px-2 ">
-            <div className=" md:flex rounded-md  mb-5 px-4 text-gray-500">
-              {/* <label htmlFor="name" className="font-sans font-semibold uppercase">Name</label> */}
-              <div className="flex flex-col px-2 py-2 ">
-                <input
-                  name="first_name"
-                  id="first_name"
-                  type="text"
-                  placeholder="First Name"
-                  value={values.first_name}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  autoComplete="off"
-                  className="bg-transparent shadow-sm focus:outline-none shadow-gray-400 font-medium px-4 py-2"
-                />
-                {errors.first_name && touched.first_name ? (
-                  <p className="text-sm text-red-700">{errors.first_name}</p>
-                ) : null}
-              </div>
-              <div className="flex flex-col px-2 py-2">
-                <input
-                  name="last_name"
-                  id="last_name"
-                  type="text"
-                  placeholder="Last Name"
-                  value={values.last_name}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  autoComplete="off"
-                  className="bg-transparent shadow-sm focus:outline-none shadow-gray-400 font-medium   px-4 py-2"
-                />
-                {errors.last_name && touched.last_name ? (
-                  <p className="text-sm text-red-700">{errors.last_name}</p>
-                ) : null}
-              </div>
-            </div>
-              <div className="md:flex rounded-md  mb-5 px-4 text-gray-500">
-            <div className="flex flex-col px-2 py-2">
-              <input
-                name="phone_number"
-                id="phone_number"
-                type="number"
-                placeholder="Phone Number"
-                className="bg-transparent shadow-sm focus:outline-none shadow-gray-400 font-medium    px-4 py-2 w-full"
-                value={values.phone_number}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                autoComplete="off"
-              />
-              {errors.phone_number && touched.phone_number ? (
-                <p className="text-sm text-red-700">{errors.phone_number}</p>
-              ) : null}
-            </div>
-              <div className="flex flex-col px-2 py-2 ">
-                <input
-                  name="city"
-                  id="city"
-                  type="text"
-                  placeholder="City"
-                  className="bg-transparent shadow-sm focus:outline-none shadow-gray-400 font-medium    px-4 py-2 w-full"
-                  value={values.city}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  autoComplete="off"
-                />
-                {errors.city && touched.city ? (
-                  <p className="text-sm text-red-700">{errors.city}</p>
-                ) : null}
-              </div>
-            </div>
-            <div className="px-6 mb-5">
-              <input
-                name="email"
-                id="email"
-                type="email"
-                placeholder="Email"
-                className="bg-transparent shadow-sm focus:outline-none shadow-gray-400 font-medium    px-4 py-2 w-full"
-                value={values.email}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                autoComplete="off"
-              />
-              {errors.email && touched.email ? (
-                <p className="text-sm text-red-700">{errors.email}</p>
-              ) : null}
-            </div>{" "}
-            <div className="md:flex rounded-md  mb-5 px-4 text-gray-500">
-              <div className="flex flex-col px-2 py-2 ">
-                <input
-                  name="age"
-                  id="age"
-                  type="number"
-                  placeholder="Age"
-                  className="bg-transparent shadow-sm focus:outline-none shadow-gray-400 font-medium    px-4 py-2 w-full"
-                  value={values.age}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  autoComplete="off"
-                />
-                {errors.age && touched.age ? (
-                  <p className="text-sm text-red-700">{errors.age}</p>
-                ) : null}
-              </div>
-              {/* Gender */}
-              <div className="flex flex-col px-2 py-2 ">
-                <input
-                  name="gender"
-                  id="gender"
-                  type="text"
-                  placeholder="Gender"
-                  className="bg-transparent shadow-sm focus:outline-none shadow-gray-400 font-medium    px-4 py-2 w-full"
-                  value={values.gender}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  autoComplete="off"
-                />
-                {errors.gender && touched.gender ? (
-                  <p className="text-sm text-red-700">{errors.gender}</p>
-                ) : null}
-              </div>
-            </div>{" "}
-            <div className=" md:flex rounded-md  mb-5 px-4">
-              <div className="flex flex-col px-2 py-2">
-                {/* <label htmlFor="password">Password</label> */}
-                <input
-                  name="password"
-                  id="password"
-                  type="password"
-                  placeholder="Password"
-                  className="bg-transparent shadow-sm focus:outline-none shadow-gray-400 font-medium    px-4 py-2"
-                  value={values.password}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  autoComplete="off"
-                />
-                {errors.password && touched.password ? (
-                  <p className="text-sm text-red-700">{errors.password}</p>
-                ) : null}
-              </div>
-              <div className="flex flex-col px-2 py-2">
-                <input
-                  name="confirm_password"
-                  id="confirm_password"
-                  type="password"
-                  placeholder="Confirm Password"
-                  className="bg-transparent shadow-sm focus:outline-none shadow-gray-400 font-medium   px-4 py-2"
-                  value={values.confirm_password}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  autoComplete="off"
-                />
-                {errors.confirm_password && touched.confirm_password ? (
-                  <p className="text-sm text-red-700">
-                    {errors.confirm_password}
-                  </p>
-                ) : null}
-              </div>
-            </div>
-          </div>
-          <div className="flex justify-center text-gray-500 first-line:">
-            <p>
-              Already have an account?
-              <Link to="/login">
-                <span className="p-2 capitalize text-[#EFBC9B] font-semibold">
-                  log in
-                </span>
-              </Link>
-            </p>
-          </div>
-          <div className="flex justify-center p-4">
-            <Link>
-              <button
-                type="submit"
-                onClick={handleSubmit}
-                className="capitalize cursor-pointer font-semibold text-white bg-[#93C6E7] px-8 py-2 rounded">
-                register
-              </button>
+        {/* Clerk SignUp Component */}
+        <div className="flex justify-center px-6 py-4">
+          <SignUp 
+            afterSignUpUrl="/predict"
+            signInUrl="/login"
+            appearance={{
+              elements: {
+                formButtonPrimary: "bg-gradient-to-r from-[#93C6E7] to-[#7bb3d9] hover:from-[#7bb3d9] hover:to-[#6ba3d0] focus:ring-4 focus:ring-[#93C6E7]/30 transition-all duration-300 transform hover:scale-105 shadow-md",
+                card: "bg-transparent shadow-none border-none",
+                headerTitle: "hidden",
+                headerSubtitle: "hidden",
+                formFieldInput: "border-gray-200 focus:border-[#93C6E7] focus:ring-[#93C6E7]/20 rounded-lg transition-colors duration-200",
+                footerActionLink: "text-[#93C6E7] hover:text-[#7bb3d9] font-medium",
+                identityPreviewText: "text-gray-700",
+                formFieldLabel: "text-gray-700 font-medium",
+                formFieldSuccessText: "text-green-600",
+                formFieldErrorText: "text-red-500"
+              }
+            }}
+          />
+        </div>
+
+        {/* Footer Link */}
+        <div className="flex justify-center text-gray-600 pb-8 px-6">
+          <p className="text-center">
+            Already have an account?{" "}
+            <Link to="/login" className="group">
+              <span className="text-[#93C6E7] hover:text-[#7bb3d9] font-semibold transition-colors duration-200 group-hover:underline">
+                Sign In
+              </span>
             </Link>
-          </div>
-        </form>
+          </p>
+        </div>
       </div>
+      
+      {/* Decorative Elements */}
+      <div className="absolute top-10 right-10 w-24 h-24 bg-[#93C6E7]/10 rounded-full blur-xl"></div>
+      <div className="absolute bottom-10 left-10 w-28 h-28 bg-[#7bb3d9]/10 rounded-full blur-xl"></div>
     </div>
   );
 }
+
 export default Signup;
