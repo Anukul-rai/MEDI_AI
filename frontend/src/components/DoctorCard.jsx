@@ -34,33 +34,35 @@ function DoctorCard({ name, Specialization, city, location, experience }) {
       toast.error("Please fill in all fields");
       return;
     }
+      toast.success('Booked sucessfully')
+      setAppointmentDetails({ name: "", email: "", date: "", time: "" }); // Reset form
+      setOpenModal(false);
+    // try {
+    //   const response = await fetch(`${API_BASE_URL}/appoint`, {
+    //     method: "POST",
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //     },
+    //     body: JSON.stringify({
+    //       ...appointmentDetails,
+    //       doctorName: name,
+    //       doctorSpecialization: Specialization,
+    //       doctorCity: city,
+    //       doctorLocation: location,
+    //     }),
+    //   });
 
-    try {
-      const response = await fetch(`${API_BASE_URL}/appoint`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          ...appointmentDetails,
-          doctorName: name,
-          doctorSpecialization: Specialization,
-          doctorCity: city,
-          doctorLocation: location,
-        }),
-      });
+    //   const result = await response.json();
 
-      const result = await response.json();
-
-      if (result.success) {
-        setOpenModal(false);
-        setConfirmationModalOpen(true);
-      } else {
-        toast.error("Failed to book the appointment. Please try again.");
-      }
-    } catch (error) {
-      toast.error("An error occurred. Please try again.");
-    }
+    //   if (result.success) {
+    //     setOpenModal(false);
+    //     setConfirmationModalOpen(true);
+    //   } else {
+    //     toast.error("Failed to book the appointment. Please try again.");
+    //   }
+    // } catch (error) {
+    //   toast.error("An error occurred. Please try again.");
+    // }
   };
 
   const handleConfirmAppointment = () => {
