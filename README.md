@@ -25,3 +25,4 @@ This is the **frontend** of the Disease Prediction System built using **React** 
 ---
 
 
+# Medi-AI
