@@ -1,84 +1,113 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { Search, X } from "lucide-react";
 import DoctorCard from "../components/DoctorCard";
 import { doctors } from "../components/DoctorList";
 
+const API_BASE_URL = import.meta.env.VITE_API_URL;
+
 const specializations = [
-  "General Physician",
-  "Cardiologist",
-  "Dermatologist",
-  "Neurologist",
-  "Gynecologist",
-  "Pediatrician",
-  "Orthopedic",
-  "Ophthalmologist",
-  "Psychiatrist",
-  "ENT Specialist",
+    "General Physician",
+    "Cardiologist",
+    "Dermatologist",
+    "Neurologist",
+    "Gynecologist",
+    "Pediatrician",
+    "Orthopedic",
+    "Ophthalmologist",
+    "Psychiatrist",
+    "ENT Specialist",
 ];
 
 const cities = [
-  "Kathmandu",
-  "Bhaktapur",
-  "Lalitpur",
-  "Jhapa",
-  "Chitwan",
-  "Janakpur",
-  "Pokhara",
-  "Hetauda",
-  "Dharan",
+    "Kathmandu",
+    "Bhaktapur",
+    "Lalitpur",
+    "Jhapa",
+    "Chitwan",
+    "Janakpur",
+    "Pokhara",
+    "Hetauda",
+    "Dharan",
 ];
 
-function DoctorRecommend() {
-const [filters, setFilters] = useState({
-    specialization: "",
-    city: "",
-    searchQuery: "",
-  });
-
-  // Filter doctors based on all criteria
-const filteredDoctors = useMemo(() => {
-    return doctors.filter((doctor) => {
-    const matchesSpecialization =
-        !filters.specialization ||
-        doctor.Specialization.toLowerCase().includes(
-        filters.specialization.toLowerCase()
-        );
-
-    const matchesCity =
-        !filters.city ||
-        doctor.city.toLowerCase().includes(filters.city.toLowerCase());
-
-    const matchesSearch =
-        !filters.searchQuery ||
-        doctor.name.toLowerCase().includes(filters.searchQuery.toLowerCase()) ||
-        doctor.Specialization.toLowerCase().includes(
-        filters.searchQuery.toLowerCase()
-        ) ||
-        doctor.city.toLowerCase().includes(filters.searchQuery.toLowerCase());
-
-    return matchesSpecialization && matchesCity && matchesSearch;
+function DoctorRecommend({ predictedSymptoms }) {
+    const [filters, setFilters] = useState({
+        specialization: "",
+        city: "",
+        searchQuery: "",
     });
-}, [filters]);
 
-const handleFilterChange = (key, value) => {
-    setFilters((prev) => ({ ...prev, [key]: value }));
-};
+    const [predictedDisease, setPredictedDisease] = useState(null);
 
-const clearFilters = () => {
-    setFilters({ specialization: "", city: "", searchQuery: "" });
-};
+    // Fetch predicted disease from backend
+    useEffect(() => {
+        if (predictedSymptoms && predictedSymptoms.length > 0) {
+        fetch(`${API_BASE_URL}/diseasepredict`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ symptoms: predictedSymptoms }),
+        })
+            .then((res) => res.json())
+            .then((data) => {
+            if (data.specialize) {
+                setPredictedDisease(data);
+                setFilters((prev) => ({ ...prev, specialization: data.specialize }));
+            }
+            })
+            .catch((err) => console.error("Prediction error:", err));
+        }
+    }, [predictedSymptoms]);
 
-const hasActiveFilters =
-    filters.specialization || filters.city || filters.searchQuery;
+    // Filter doctors
+    const filteredDoctors = useMemo(() => {
+        return doctors.filter((doctor) => {
+        // If predicted disease exists, only show that specialization
+        if (predictedDisease?.specialize) {
+            return (
+            doctor.Specialization.toLowerCase() ===
+            predictedDisease.specialize.toLowerCase()
+            );
+        }
 
-return (
+        // Otherwise, apply user filters
+        const matchesSpecialization =
+            !filters.specialization ||
+            doctor.Specialization.toLowerCase() ===
+            filters.specialization.toLowerCase();
+
+        const matchesCity =
+            !filters.city ||
+            doctor.city.toLowerCase().includes(filters.city.toLowerCase());
+
+        const matchesSearch =
+            !filters.searchQuery ||
+            doctor.name.toLowerCase().includes(filters.searchQuery.toLowerCase()) ||
+            doctor.Specialization.toLowerCase().includes(
+            filters.searchQuery.toLowerCase()
+            ) ||
+            doctor.city.toLowerCase().includes(filters.searchQuery.toLowerCase());
+
+        return matchesSpecialization && matchesCity && matchesSearch;
+        });
+    }, [filters, predictedDisease]);
+
+    const handleFilterChange = (key, value) => {
+        setFilters((prev) => ({ ...prev, [key]: value }));
+    };
+
+    const clearFilters = () => {
+        setFilters({ specialization: "", city: "", searchQuery: "" });
+        setPredictedDisease(null);
+    };
+
+    const hasActiveFilters =filters.specialization || filters.city || filters.searchQuery;
+
+    return (
         <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
         {/* Hero Section */}
-        <div className="w-full h-[350px] bg-right bg-doc bg-cover bg-fixed ">
-            <div className="w-full h-full bg-black/30 bg-opacity-60 flex flex-col justify-center items-center px-10">
-            <h1 className="text-6xl top-20 justify-start items-center text-white font-text font-bold">
-                Find Doctor
-            </h1>
+        <div className="w-full h-[350px] bg-right bg-doc bg-cover bg-fixed">
+            <div className="w-full h-full bg-black/30 flex flex-col justify-center items-center px-10">
+            <h1 className="text-6xl text-white font-bold">Find Doctor</h1>
             <p className="text-white italic">
                 "Effortless doctor appointments: Book with ease, stay healthy!"
             </p>
@@ -103,7 +132,7 @@ return (
                     onChange={(e) =>
                         handleFilterChange("searchQuery", e.target.value)
                     }
-                    className="w-full pl-10 pr-4 py-3 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
+                    className="w-full pl-10 pr-4 py-3 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
                     />
                 </div>
                 </div>
@@ -118,7 +147,7 @@ return (
                     onChange={(e) =>
                     handleFilterChange("specialization", e.target.value)
                     }
-                    className="w-full bg-white py-3 px-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
+                    className="w-full bg-white py-3 px-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
                 >
                     <option value="">All Specializations</option>
                     {specializations.map((spec) => (
@@ -137,7 +166,7 @@ return (
                 <select
                     value={filters.city}
                     onChange={(e) => handleFilterChange("city", e.target.value)}
-                    className="w-full bg-white py-3 px-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
+                    className="w-full bg-white py-3 px-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
                 >
                     <option value="">All Cities</option>
                     {cities.map((city) => (
@@ -154,7 +183,7 @@ return (
                 <div className="mt-4 flex justify-end">
                 <button
                     onClick={clearFilters}
-                    className="flex items-center text-gray-600 hover:text-gray-800 transition-colors"
+                    className="flex items-center text-gray-600 hover:text-gray-800"
                 >
                     <X className="w-4 h-4 mr-1" />
                     Clear all filters
@@ -165,13 +194,11 @@ return (
         </div>
 
         {/* Results Section */}
-        <div className="max-w-7xl mx-auto px-6 py-12 " >
-            <div className="flex justify-center items-center mb-8 ">
-            <h2 className="text-2xl font-bold text-gray-700 ">
+        <div className="max-w-7xl mx-auto px-6 py-12">
+            <div className="flex justify-center items-center mb-8">
+            <h2 className="text-2xl font-bold text-gray-700">
                 Available Doctors
-                <span className="text-blue-400 ml-2">
-                ({filteredDoctors.length})
-                </span>
+                <span className="text-blue-400 ml-2">({filteredDoctors.length})</span>
             </h2>
             </div>
 
@@ -186,6 +213,10 @@ return (
                     Specialization={doctor.Specialization}
                     rating={doctor.rating}
                     experience={doctor.experience}
+                    highlight={
+                    predictedDisease?.specialize === doctor.Specialization
+                    }
+                    predictedSpecialization={predictedDisease?.specialize} // <- Pass it here
                 />
                 ))}
             </div>
