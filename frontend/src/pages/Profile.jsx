@@ -15,6 +15,25 @@ function Profile() {
   const [isEditing, setIsEditing] = useState(false);
   const [reports, setReports] = useState([]);
 
+  // Load data from localStorage on mount
+  useEffect(() => {
+    const savedProfile = localStorage.getItem("profileData");
+    const savedReports = localStorage.getItem("reportsData");
+
+    if (savedProfile) setProfileData(JSON.parse(savedProfile));
+    if (savedReports) setReports(JSON.parse(savedReports));
+  }, []);
+
+  // Save profileData to localStorage whenever it changes
+  useEffect(() => {
+    localStorage.setItem("profileData", JSON.stringify(profileData));
+  }, [profileData]);
+
+  // Save reports to localStorage whenever it changes
+  useEffect(() => {
+    localStorage.setItem("reportsData", JSON.stringify(reports));
+  }, [reports]);
+
   const handleInputChange = (e) => {
     setProfileData({
       ...profileData,
@@ -24,21 +43,22 @@ function Profile() {
 
   const handleSave = () => {
     setIsEditing(false);
-    // Here you can add API call to save data
+    // Data is already saved to localStorage via useEffect
   };
 
   const handleFileUpload = (e) => {
     const files = Array.from(e.target.files);
-    const newReports = files.map(file => ({
+    const newReports = files.map((file, index) => ({
+      id: Date.now() + index, // unique id
       name: file.name,
       date: new Date().toLocaleDateString(),
-      url: URL.createObjectURL(file)
+      url: URL.createObjectURL(file),
     }));
     setReports([...reports, ...newReports]);
   };
-  
+
   const handleDeleteReport = (reportId) => {
-    setReports(reports.filter(report => report.id !== reportId));
+    setReports(reports.filter((report) => report.id !== reportId));
   };
 
   if (!isLoaded) {
@@ -68,8 +88,8 @@ function Profile() {
           <button
             onClick={() => setActiveTab("profile")}
             className={`px-6 py-3 font-medium ${
-              activeTab === "profile" 
-                ? "text-blue-600 border-b-2 border-blue-600" 
+              activeTab === "profile"
+                ? "text-blue-600 border-b-2 border-blue-600"
                 : "text-gray-600"
             }`}
           >
@@ -78,8 +98,8 @@ function Profile() {
           <button
             onClick={() => setActiveTab("reports")}
             className={`px-6 py-3 font-medium ${
-              activeTab === "reports" 
-                ? "text-blue-600 border-b-2 border-blue-600" 
+              activeTab === "reports"
+                ? "text-blue-600 border-b-2 border-blue-600"
                 : "text-gray-600"
             }`}
           >
@@ -101,93 +121,36 @@ function Profile() {
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm font-medium text-[#2e4856] mb-1">
-                    Age
-                  </label>
-                  <input
-                    type="number"
-                    name="age"
-                    value={profileData.age}
-                    onChange={handleInputChange}
-                    disabled={!isEditing}
-                    className="w-full p-2 border rounded-md disabled:bg-gray-100"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-[#2e4856] mb-1">
-                    Gender
-                  </label>
-                  <select
-                    name="gender"
-                    value={profileData.gender}
-                    onChange={handleInputChange}
-                    disabled={!isEditing}
-                    className="w-full p-2 border rounded-md disabled:bg-gray-100"
-                  >
-                    <option value="">Select Gender</option>
-                    <option value="male">Male</option>
-                    <option value="female">Female</option>
-                    <option value="other">Other</option>
-                  </select>
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-[#2e4856] mb-1">
-                    Phone
-                  </label>
-                  <input
-                    type="tel"
-                    name="phone"
-                    value={profileData.phone}
-                    onChange={handleInputChange}
-                    disabled={!isEditing}
-                    className="w-full p-2 border rounded-md disabled:bg-gray-100"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-[#2e4856] mb-1">
-                    Address
-                  </label>
-                  <input
-                    type="text"
-                    name="address"
-                    value={profileData.address}
-                    onChange={handleInputChange}
-                    disabled={!isEditing}
-                    className="w-full p-2 border rounded-md disabled:bg-gray-100"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-[#2e4856] mb-1">
-                    Height (cm)
-                  </label>
-                  <input
-                    type="number"
-                    name="height"
-                    value={profileData.height}
-                    onChange={handleInputChange}
-                    disabled={!isEditing}
-                    className="w-full p-2 border rounded-md disabled:bg-gray-100"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-[#2e4856] mb-1">
-                    Weight (kg)
-                  </label>
-                  <input
-                    type="number"
-                    name="weight"
-                    value={profileData.weight}
-                    onChange={handleInputChange}
-                    disabled={!isEditing}
-                    className="w-full p-2 border rounded-md disabled:bg-gray-100"
-                  />
-                </div>
+                {["age", "gender", "phone", "address", "height", "weight"].map((field) => (
+                  <div key={field}>
+                    <label className="block text-sm font-medium text-[#2e4856] mb-1 capitalize">
+                      {field.replace("_", " ")}
+                    </label>
+                    {field === "gender" ? (
+                      <select
+                        name="gender"
+                        value={profileData.gender}
+                        onChange={handleInputChange}
+                        disabled={!isEditing}
+                        className="w-full p-2 border rounded-md disabled:bg-gray-100"
+                      >
+                        <option value="">Select Gender</option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                        <option value="other">Other</option>
+                      </select>
+                    ) : (
+                      <input
+                        type={["age", "height", "weight"].includes(field) ? "number" : "text"}
+                        name={field}
+                        value={profileData[field]}
+                        onChange={handleInputChange}
+                        disabled={!isEditing}
+                        className="w-full p-2 border rounded-md disabled:bg-gray-100"
+                      />
+                    )}
+                  </div>
+                ))}
               </div>
 
               {isEditing && (
@@ -206,7 +169,7 @@ function Profile() {
           {activeTab === "reports" && (
             <div>
               <h2 className="text-xl font-semibold mb-4 text-[#2e4856]">Medical Reports</h2>
-              
+
               <div className="mb-4">
                 <input
                   type="file"
@@ -218,8 +181,8 @@ function Profile() {
 
               {reports.length > 0 && (
                 <div className="space-y-2">
-                  {reports.map((report, index) => (
-                    <div key={index} className="flex justify-between items-center p-3 bg-gray-50 rounded">
+                  {reports.map((report) => (
+                    <div key={report.id} className="flex justify-between items-center p-3 bg-gray-50 rounded">
                       <div>
                         <p className="font-medium">{report.name}</p>
                         <p className="text-sm text-gray-600">Uploaded: {report.date}</p>
@@ -240,7 +203,7 @@ function Profile() {
                   ))}
                 </div>
               )}
-            </div> //lastdiv
+            </div>
           )}
         </div>
       </div>
