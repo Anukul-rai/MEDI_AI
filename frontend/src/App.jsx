@@ -10,7 +10,6 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useAuth } from '@clerk/clerk-react';
 
-// Protected Route Component
 function ProtectedRoute({ children }) {
   const { isSignedIn, isLoaded } = useAuth();
   

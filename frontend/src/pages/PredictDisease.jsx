@@ -154,14 +154,20 @@ function PredictDisease() {
   });
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
   const handlePredict = async () => {
+    setLoading(true);
     try {
       const response = await fetch(`${API_BASE_URL}/diseasepredict`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(selectedSymptoms),
+        body: JSON.stringify({
+          symptom1: { value: selectedSymptoms.symptom1.value },
+          symptom2: { value: selectedSymptoms.symptom2.value },
+          symptom3: { value: selectedSymptoms.symptom3.value },
+        }),
       });
 
       if (!response.ok) {
@@ -182,6 +188,8 @@ function PredictDisease() {
       }
     } catch (error) {
       console.error("Error predicting disease:", error.message);
+    } finally{
+      setLoading(false)
     }
   };
   const handleSymptomChange = (value, actionMeta) => {
@@ -294,50 +302,96 @@ function PredictDisease() {
               <button
                 type="button"
                 onClick={handlePredict}
-                className="bg-[#93C6E7] cursor-pointer px-4 py-2 rounded mt-5"
+                className={`px-4 py-2 rounded mt-5 ${
+                  selectedSymptoms.symptom1 && selectedSymptoms.symptom2 && selectedSymptoms.symptom3
+                    ? "bg-[#93C6E7] cursor-pointer"
+                    : "bg-gray-300 cursor-not-allowed"
+                }`}
+                disabled={
+                  !selectedSymptoms.symptom1 ||
+                  !selectedSymptoms.symptom2 ||
+                  !selectedSymptoms.symptom3
+                }
               >
-                Predict
+                {loading ? "Predicting..." : "Predict"}
               </button>
             </div>
           </form>
           {isModalOpen && (
-            <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
-              <div className="bg-white p-8 rounded-lg w-[500px] relative">
-                <h2 className="text-2xl font-bold mb-4">
-                  Predicted Disease: {predictionData.prediction}
-                </h2>
-                <p className="text-gray-800 font-medium text-sm">
-                  What is {predictionData.prediction}?
-                </p>
-                <p className="mb-4 text-justify text-xs text-gray-700">
-                  {predictionData.description}
-                </p>
-                <p className="text-gray-800 font-medium text-sm">
-                  What precaution you should take for{" "}
-                  {predictionData.prediction}?
-                </p>
-                <p className="mb-4 text-justify text-xs text-gray-700">
-                  {predictionData.precautions}
-                </p>
-                <p className="text-lightText font-medium">
-                  We would suggest to visit a {predictionData.specialize}.
-                </p>
-                <div className="my-5 flex justify-center items-center h-[1px] bg-gray-200"></div>
-                <p className="mt-5 text-xs text-gray-500 font-bold">
-                  Would you like to book an appointment and receive expert
-                  advice from a {predictionData.specialize}?
-                </p>
-                <a
-                  className="underline text-btn2 font-black text-sm flex justify-center items-center w-full my-2"
-                  href="/book"
-                >
-                  Book Appointment
-                </a>
+            <div className="fixed inset-0 flex items-center justify-center z-50 bg-black/40 backdrop-blur-sm">
+              <div className="bg-white p-8 rounded-2xl shadow-2xl w-[500px] relative border border-gray-100 animate-fadeIn">
+                {/* Header */}
+                <div className="bg-gradient-to-r from-[#60A5FA] to-[#A7F3D0] -mx-8 -mt-8 px-8 py-4 rounded-t-2xl">
+                  <h2 className="text-2xl font-extrabold text-gray-900">
+                    🩺 Predicted Disease
+                  </h2>
+                  <p className="text-lg font-semibold text-gray-800 mt-1">
+                    {predictionData.prediction}
+                  </p>
+                </div>
+
+                {/* Body */}
+                <div className="mt-6 space-y-4 text-gray-700">
+                  <div>
+                    <p className="font-semibold text-sm text-gray-800">
+                      What is {predictionData.prediction}?
+                    </p>
+                    <p className="text-sm text-justify leading-relaxed text-gray-600 mt-1">
+                      {predictionData.description}
+                    </p>
+                  </div>
+
+                  <div>
+                    <p className="font-semibold text-sm text-gray-800">
+                      Precautions for {predictionData.prediction}:
+                    </p>
+                    <ul className="text-sm list-disc ml-5 text-gray-600 leading-relaxed">
+                      {Array.isArray(predictionData.precautions)
+                        ? predictionData.precautions.map((p, i) => (
+                            <li key={i}>{p}</li>
+                          ))
+                        : <li>{predictionData.precautions}</li>}
+                    </ul>
+                  </div>
+
+                  <div className="bg-gray-50 p-3 rounded-lg border border-gray-100">
+                    <p className="text-sm text-gray-700">
+                      We recommend consulting a{" "}
+                      <span className="font-semibold text-[#2563EB]">
+                        {predictionData.specialize}
+                      </span>{" "}
+                      for professional advice.
+                    </p>
+                  </div>
+                </div>
+
+                {/* Divider */}
+                <div className="my-6 border-t border-gray-200"></div>
+
+                {/* Footer */}
+                <div className="flex flex-col items-center">
+                  <p className="text-sm text-gray-600 mb-4 text-center">
+                    Would you like to book an appointment with a{" "}
+                    <span className="font-semibold text-[#2563EB]">
+                      {predictionData.specialize}
+                    </span>{" "}
+                    specialist?
+                  </p>
+
+                  <a
+                    href="/book"
+                    className="w-full text-center py-3 rounded-xl font-bold text-white bg-gradient-to-r from-[#3B82F6] to-[#10B981] hover:opacity-90 transition duration-300"
+                  >
+                    Book Appointment
+                  </a>
+                </div>
+
+                {/* Close Button */}
                 <button
                   onClick={closeModal}
-                  className=" absolute top-4 right-6 text-gray-500"
+                  className="absolute top-4 right-5 text-gray-500 hover:text-gray-800 transition"
                 >
-                  <MdClose />
+                  <MdClose size={22} />
                 </button>
               </div>
             </div>
