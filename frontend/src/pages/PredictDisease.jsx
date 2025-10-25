@@ -155,19 +155,63 @@ function PredictDisease() {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+  // const handlePredict = async () => {
+  //   setLoading(true);
+  //   try {
+  //     const response = await fetch(`${API_BASE_URL}/diseasepredict`, {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify({
+  //         symptom1: { value: selectedSymptoms.symptom1.value },
+  //         symptom2: { value: selectedSymptoms.symptom2.value },
+  //         symptom3: { value: selectedSymptoms.symptom3.value },
+  //       }),
+  //     });
+
+  //     if (!response.ok) {
+  //       throw new Error(`HTTP error! status: ${response.status}`);
+  //     }
+
+  //     const data = await response.json();
+  //     if (data.error) {
+  //       console.error("Error predicting disease:", data.error);
+  //     } else {
+  //       setPredictionData({
+  //         prediction: data.prediction,
+  //         description: data.description,
+  //         precautions: data.precautions,
+  //         specialize: data.specialize,
+  //       });
+  //       setIsModalOpen(true);
+  //     }
+  //   } catch (error) {
+  //     console.error("Error predicting disease:", error.message);
+  //   } finally{
+  //     setLoading(false)
+  //   }
+  // };
+
   const handlePredict = async () => {
     setLoading(true);
+
     try {
+      // Convert selectedSymptoms object to array of symptom strings
+      const symptomsArray = Object.values(selectedSymptoms)
+        .map(s => s?.value)
+        .filter(Boolean); 
+
+      if (symptomsArray.length < 3) {
+        alert("Please select all 3 symptoms");
+        setLoading(false);
+        return;
+      }
+
       const response = await fetch(`${API_BASE_URL}/diseasepredict`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          symptom1: { value: selectedSymptoms.symptom1.value },
-          symptom2: { value: selectedSymptoms.symptom2.value },
-          symptom3: { value: selectedSymptoms.symptom3.value },
-        }),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ symptoms: symptomsArray }), 
       });
 
       if (!response.ok) {
@@ -181,15 +225,17 @@ function PredictDisease() {
         setPredictionData({
           prediction: data.prediction,
           description: data.description,
-          precautions: data.precautions,
+          precautions: Array.isArray(data.precautions)
+            ? data.precautions
+            : data.precautions.split(/[\d+]\.\s/).filter(Boolean), // convert string to array if needed
           specialize: data.specialize,
         });
         setIsModalOpen(true);
       }
     } catch (error) {
       console.error("Error predicting disease:", error.message);
-    } finally{
-      setLoading(false)
+    } finally {
+      setLoading(false);
     }
   };
   const handleSymptomChange = (value, actionMeta) => {
