@@ -59,7 +59,11 @@ npm install
  Create a .env file and add:
 
 ```bash
+# Backend API URL for disease prediction
 VITE_API_URL=http://127.0.0.1:5000
+
+# Clerk publishable key for authentication (replace with your own key)
+VITE_CLERK_PUBLISHABLE_KEY=pk_test_your_publishable_key_here
 ```
 
 - Run the development server
