@@ -65,6 +65,7 @@ function NavBar() {
             </div>
         );
     }
+        const fallbackImage = "https://www.gravatar.com/avatar/?d=mp&f=y";
 
     return (
         <div className="w-full h-[70px] flex items-center justify-between z-20 font-text sticky top-0 bg-[#365666] px-5">
@@ -128,7 +129,7 @@ function NavBar() {
                 {/* Profile Image */}
                 <Link to="/profile">
                     <img
-                    src={user?.imageUrl || "/user.png"}
+                    src={user?.imageUrl || fallbackImage}
                     alt="Profile"
                     className="w-10 h-10 rounded-full object-cover cursor-pointer border-2 border-[#EFBC9B]"
                     />
