@@ -67,7 +67,7 @@ function Signup() {
   // Show success message after signup
   if (success) {
     return (
-      <div className="min-h-screen flex flex-col justify-center items-center w-full bg-gradient-to-br from-[#f8fbff] to-[#eef6ff] font-text px-4">
+      <div className="min-h-screen flex flex-col justify-center items-center w-full bg-gradient-to-br from-[#e0d9d9] to-[#3d7db4] font-text px-4">
         <div className="w-full max-w-md rounded-2xl shadow-lg shadow-gray-300 bg-white/70 backdrop-blur-md border border-white/30 p-8 text-center">
           <div className="mb-4">
             <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -94,7 +94,7 @@ function Signup() {
   }
 
   return (
-    <div className=" flex flex-col justify-center items-center w-full bg-gradient-to-br from-[#c1abab] to-[#10375a] font-text px-4 py-25">
+    <div className=" flex flex-col justify-center items-center w-full bg-gradient-to-br from-[#e0d9d9] to-[#3d7db4] font-text px-4 py-25">
       <div className="w-full max-w-md rounded-2xl backdrop-blur-sm shadow-lg shadow-gray-300 bg-white/80 border border-white/30 p-8">
         {/* Header */}
         <div className="text-center mb-6">

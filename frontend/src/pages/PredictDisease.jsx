@@ -251,11 +251,11 @@ function PredictDisease() {
           </ul>
         </div>
       </div>
-      <div className="w-full my-40 font-text">
-        <div className="flex justify-center mt-10">
+      <div className="w-full py-40 font-text bg-gradient-to-br from-[#e0d9d9] to-[#3d7db4]">
+        <div className="flex justify-center items-center mt-10 ">
           <form className="">
             <div className="flex">
-              <div className="mx-3">
+              <div className="mx-5 ">
                 <label>
                   Symptom 1:
                   <Select

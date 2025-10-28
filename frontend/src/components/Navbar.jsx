@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { CiMenuFries } from "react-icons/ci";
 import { RxCross2 } from "react-icons/rx";
-import { FaMoon, FaSun } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import { useAuth, useUser, SignOutButton } from "@clerk/clerk-react";
 
@@ -74,7 +73,7 @@ function NavBar() {
             <div>
             <button
                 onClick={toggleMenu}
-                className="flex items-center hover:bg-black/70 hover:text-amber-50 md:px-3 md:py-2 px-2 py-1 rounded-full bg-[#EFBC9B] cursor-pointer text-sm">
+                className="flex items-center hover:bg-black/70 hover:text-amber-50 md:px-3 md:py-2 px-2 py-1 rounded-full bg-[#EFBC9B] cursor-pointer text-sm ">
                 {isOpen ? <RxCross2 /> : <CiMenuFries />}
                 <h1 className="capitalize px-2">menu</h1>
             </button>

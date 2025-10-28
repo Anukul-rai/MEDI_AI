@@ -56,7 +56,7 @@ export default function Login() {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center bg-gradient-to-br from-[#c1abab] to-[#10375a] font-text px-4 py-15">
+    <div className="flex flex-col justify-center items-center bg-gradient-to-br from-[#e0d9d9] to-[#3d7db4] font-text px-4 py-15">
       <div className="w-full max-w-md bg-white/80 backdrop-blur-sm shadow-lg shadow-gray-300 rounded-2xl p-8 space-y-6 border border-white/30">
         {/* Header */}
         <div className="text-center">
