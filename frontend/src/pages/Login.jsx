@@ -1,55 +1,74 @@
 import React from "react";
-import { SignIn } from "@clerk/clerk-react";
-import { Link } from "react-router-dom";
+import { useSignIn } from "@clerk/clerk-react";
+import { FcGoogle } from "react-icons/fc";
+import { FaApple } from "react-icons/fa";
+import { FaFacebook } from "react-icons/fa6";
 
-function Login() {
+export default function Login() {
+  const { signIn, isLoaded } = useSignIn();
+
+  if (!isLoaded) return null;
+
+  const handlePopupOAuth = async (provider) => {
+  try {
+    await signIn.authenticateWithRedirect({
+      strategy: provider,
+      redirectUrl: "/sso-callback",
+      redirectUrlComplete: "/Homepage",
+    });
+  } catch (err) {
+    console.error("OAuth redirect error:", err);
+  }
+};
+
   return (
-    <div className="min-h-screen flex flex-col justify-center items-center w-full bg-gradient-to-br from-[#ffffff] to-[#f0f8ff] font-text px-4 -mt-8">
-      <div className="w-full max-w-md rounded-2xl shadow-lg shadow-gray-300 bg-black/20 backdrop-blur-sm border border-white/20  space-y-3 ">
-        {/* Header Section */}
-        <div className="text-center pt-8 ">
-          <h1 className="font-bold text-2xl md:text-3xl text-[#325465] mb-1">
-            Welcome Back
-          </h1>
-          <p className="text-xs text-[#365666] font-medium px-6 leading-relaxed">
+    <div className="min-h-screen flex flex-col justify-center items-center bg-gradient-to-br from-[#c1abab] to-[#10375a] font-text px-4">
+      <div className="w-full max-w-md bg-white/80 backdrop-blur-sm shadow-lg rounded-2xl p-8 space-y-6 border border-white/30">
+        {/* Header */}
+        <div className="text-center">
+          <h1 className="text-3xl font-bold text-[#1d1d22] mb-2">Welcome Back</h1>
+          <p className="text-sm text-[#279cd6] font-medium">
             Sign in to your health hub, where your well-being is our priority!
           </p>
         </div>
 
-        {/* Clerk SignIn Component */}
-        <div className="flex justify-center px-4">
-          <SignIn
-            afterSignInUrl="/predict"
-            signUpUrl="/signup"
-            appearance={{
-              elements: {
-                formButtonPrimary: "bg-[#93C6E7] hover:bg-[#a6cee9] transition duration-300 rounded-md",
-                card: "bg-white  rounded-xl p-6",
-                headerTitle: "hidden",
-                headerSubtitle: "hidden",
-                formFieldInput: "border border-gray-300 focus:border-[#93C6E7] focus:ring-2 focus:ring-[#93C6E7]/50 rounded-md px-3 transition",
-                footerActionLink: "text-[#93C6E7] hover:text-[#7bb3d9] font-semibold",
-                identityPreviewText: "text-gray-600",
-                formFieldLabel: "text-gray-700 font-medium",
-              },
-            }}
-          />
+        {/* Buttons */}
+        <div className="flex flex-col gap-4">
+          <button
+            onClick={() => handlePopupOAuth("oauth_google")}
+            className="flex items-center justify-center gap-2 bg-white border border-gray-300 hover:bg-gray-50 rounded-lg py-2 transition duration-200"
+          >
+            <FcGoogle size={20} />
+            <span className="font-medium text-gray-700">Continue with Google</span>
+          </button>
+
+          <button
+            onClick={() => handlePopupOAuth("oauth_apple")}
+            className="flex items-center justify-center gap-2 bg-black text-white rounded-lg py-2 hover:bg-gray-900 transition duration-200"
+          >
+            <FaApple size={20} />
+            <span className="font-medium">Continue with Apple</span>
+          </button>
+          <button
+            onClick={() => handlePopupOAuth("oauth_facebook")}
+            className="flex items-center justify-center gap-2 bg-white border border-gray-300 hover:bg-gray-50 rounded-lg py-2 transition duration-200"
+          >
+            <FaFacebook size={20} color="blue"/>
+            <span className="font-medium">Continue with Facebook</span>
+          </button>
         </div>
 
-        {/* Footer Link */}
-        <div className="flex justify-center text-[#365666] pb-4 px-6 -pt-9">
-          <p className="text-center text-sm">
-            New to our platform?{" "}
-            <Link to="/signup" className="group">
-              <span className="text-[#a4cfeb] hover:text-[#7bb3d9] font-semibold transition-colors duration-200 group-hover:underline">
-                Create Account
-              </span>
-            </Link>
-          </p>
+        {/* Footer */}
+        <div className="text-center text-sm text-[#365666] font-semibold">
+          Don’t have an account?{" "}
+          <a
+            href="/signup"
+            className="text-[#0e96f1] font-semibold hover:text-[#7bb3d9] transition"
+          >
+            Sign Up!
+          </a>
         </div>
       </div>
     </div>
   );
 }
-
-export default Login;

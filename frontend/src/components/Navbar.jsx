@@ -123,22 +123,32 @@ function NavBar() {
         
         {isSignedIn ? (
             <div className="relative flex items-center gap-3 ml-29 group">
-                {/* Profile Link */}
+                {/* Profile + Logout Wrapper */}
+                <div className="relative group/logout">
+                {/* Profile Image */}
                 <Link to="/profile">
-                <img
+                    <img
                     src={user?.imageUrl || "/user.png"}
                     alt="Profile"
-                    className="w-10 h-10 rounded-full object-cover cursor-pointer border-2 border-white"
-                />
+                    className="w-10 h-10 rounded-full object-cover cursor-pointer border-2 border-[#EFBC9B]"
+                    />
                 </Link>
 
-                {/* Hover Logout */}
-                <div className="absolute top-12 left-1/2 transform -translate-x-1/2 hidden group-hover:flex z-50">
-                <SignOutButton>
-                    <button className="bg-[#EFBC9B] hover:bg-black/70 hover:text-amber-50 text-sm px-4 py-2 rounded-full shadow transition">
-                    Logout
+                {/* Smooth Logout Button */}
+                <div
+                    className="
+                    absolute top-12 left-1/2 transform -translate-x-1/2
+                    opacity-0 invisible group-hover/logout:opacity-100 group-hover/logout:visible
+                    transition-all duration-300 ease-in-out
+                    z-50
+                    "
+                >
+                    <SignOutButton>
+                    <button className="bg-[#EFBC9B] hover:bg-black/70 hover:text-amber-50 text-sm px-4 py-2 rounded-3xl shadow transition">
+                        Logout
                     </button>
-                </SignOutButton>
+                    </SignOutButton>
+                </div>
                 </div>
             </div>
             ) : (

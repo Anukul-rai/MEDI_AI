@@ -24,17 +24,17 @@ const Service = () => {
             <ServiceCard
                 title="Disease Prediction Model"
                 details="Our system, driven by advanced algorithms, foresees potential diseases through thorough health data analysis. This foresight enables proactive interventions, reshaping preventive healthcare for personalized and optimal well-being."
-                icon="public/health-report.gif"
+                icon="/health-report.gif"
             />
             <ServiceCard
                 title="Medical Reports Storage"
                 details="Empower yourself with easy access to your health history, effortlessly organize and secure your medical reports. Our advanced system ensures easy access, empowering you to take control of your health history for informed decision-making."
-                icon="public/server.gif"
+                icon="/server.gif"
             />
             <ServiceCard
                 title="Book an Appointment "
                 details="Effortlessly schedule your next appointment with our streamlined booking system. Take control of your health journey – book, confirm, and manage appointments with ease, ensuring timely access to personalized care."
-                icon="public/appointment.gif"
+                icon="/appointment.gif"
             />
             </div>
         </div>
