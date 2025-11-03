@@ -155,7 +155,7 @@ useEffect(() => {
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {["age","gender","phone","address","height","weight","status"].map((field) => (
+                {["age","gender","phone","address","height","weight"].map((field) => (
                   <div key={field}>
                     <label className="block text-sm font-medium text-[#2e4856] mb-1 capitalize">
                       {field.replace("_", " ")}
