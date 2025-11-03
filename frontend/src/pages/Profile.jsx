@@ -11,11 +11,13 @@ function Profile() {
     address: "",
     height: "",
     weight: "",
+    status: "", // User-defined status
   });
   const [isEditing, setIsEditing] = useState(false);
   const [reports, setReports] = useState([]);
+  const [systemHealth, setSystemHealth] = useState(null); // Full health info
 
-  // Load data from localStorage on mount
+  // Load local profile and reports
   useEffect(() => {
     const savedProfile = localStorage.getItem("profileData");
     const savedReports = localStorage.getItem("reportsData");
@@ -24,32 +26,47 @@ function Profile() {
     if (savedReports) setReports(JSON.parse(savedReports));
   }, []);
 
-  // Save profileData to localStorage whenever it changes
+  // Save profile and reports to localStorage
   useEffect(() => {
     localStorage.setItem("profileData", JSON.stringify(profileData));
   }, [profileData]);
 
-  // Save reports to localStorage whenever it changes
   useEffect(() => {
     localStorage.setItem("reportsData", JSON.stringify(reports));
   }, [reports]);
 
+  // Fetch system health from backend
+useEffect(() => {
+  const fetchSystemHealth = async () => {
+    try {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/health`);
+      const data = await res.json();
+      // Save all health info
+      setSystemHealth(data);
+    } catch (err) {
+      console.error("Error fetching system health:", err);
+      // Default fallback if API fails
+      setSystemHealth({
+        status: "unhealthy",
+        model_loaded: false,
+        label_encoder_loaded: false,
+        disease_info_loaded: false,
+      });
+    }
+  };
+  fetchSystemHealth();
+}, []);
+
   const handleInputChange = (e) => {
-    setProfileData({
-      ...profileData,
-      [e.target.name]: e.target.value,
-    });
+    setProfileData({ ...profileData, [e.target.name]: e.target.value });
   };
 
-  const handleSave = () => {
-    setIsEditing(false);
-    // Data is already saved to localStorage via useEffect
-  };
+  const handleSave = () => setIsEditing(false);
 
   const handleFileUpload = (e) => {
     const files = Array.from(e.target.files);
-    const newReports = files.map((file, index) => ({
-      id: Date.now() + index, // unique id
+    const newReports = files.map((file, idx) => ({
+      id: Date.now() + idx,
       name: file.name,
       date: new Date().toLocaleDateString(),
       url: URL.createObjectURL(file),
@@ -57,13 +74,11 @@ function Profile() {
     setReports([...reports, ...newReports]);
   };
 
-  const handleDeleteReport = (reportId) => {
-    setReports(reports.filter((report) => report.id !== reportId));
+  const handleDeleteReport = (id) => {
+    setReports(reports.filter((r) => r.id !== id));
   };
 
-  if (!isLoaded) {
-    return <div className="flex justify-center items-center h-screen">Loading...</div>;
-  }
+  if (!isLoaded) return <div className="flex justify-center items-center h-screen">Loading...</div>;
 
   return (
     <div className="max-w-4xl mx-auto p-6">
@@ -75,9 +90,31 @@ function Profile() {
             alt="Profile"
             className="w-20 h-20 rounded-full border-2 border-white"
           />
-          <div>
-            <h1 className="text-2xl font-bold capitalize text-[#2e4856]">"{user?.fullName}"</h1>
+          <div className="flex-1">
+            <h1 className="text-2xl font-bold capitalize text-[#2e4856]">
+              {user?.fullName}
+            </h1>
             <p className="text-[#7093ab]">{user?.primaryEmailAddress?.emailAddress}</p>
+
+            {/* System Status */}
+            {systemHealth && (
+              <div className="mt-2">
+                {/* Badge */}
+                <span
+                  className={`px-3 py-1 rounded-md font-semibold text-white ${
+                    systemHealth.status === "healthy" ? "bg-indigo-800" : "bg-red-600"
+                  }`}
+                >
+                  System Status: {systemHealth.status === "healthy" ? "Healthy ✅" : "Unhealthy ❌"}
+                </span>
+
+                {/* Detailed info */}
+                <div className="mt-2 text-sm font-semibold text-gray-700 bg-gray-100 p-2 rounded-md w-max space-y-1">
+                  <p>Model Loaded: {systemHealth.model_loaded ? "✅ Yes" : "❌ No"}</p>
+                  <p>Disease Info Loaded: {systemHealth.disease_info_loaded ? "✅ Yes" : "❌ No"}</p>
+                </div>
+              </div>
+              )}
           </div>
         </div>
       </div>
@@ -88,9 +125,7 @@ function Profile() {
           <button
             onClick={() => setActiveTab("profile")}
             className={`px-6 py-3 font-medium ${
-              activeTab === "profile"
-                ? "text-blue-600 border-b-2 border-blue-600"
-                : "text-gray-600"
+              activeTab === "profile" ? "text-blue-600 border-b-2 border-blue-600" : "text-gray-600"
             }`}
           >
             Profile
@@ -98,9 +133,7 @@ function Profile() {
           <button
             onClick={() => setActiveTab("reports")}
             className={`px-6 py-3 font-medium ${
-              activeTab === "reports"
-                ? "text-blue-600 border-b-2 border-blue-600"
-                : "text-gray-600"
+              activeTab === "reports" ? "text-blue-600 border-b-2 border-blue-600" : "text-gray-600"
             }`}
           >
             Reports
@@ -108,9 +141,10 @@ function Profile() {
         </div>
 
         <div className="p-6">
+          {/* Profile Tab */}
           {activeTab === "profile" && (
             <div>
-              <div className="flex justify-between items-center mb-4 ">
+              <div className="flex justify-between items-center mb-4">
                 <h2 className="text-xl font-semibold text-[#2e4856]">Personal Information</h2>
                 <button
                   onClick={() => setIsEditing(!isEditing)}
@@ -121,7 +155,7 @@ function Profile() {
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {["age", "gender", "phone", "address", "height", "weight"].map((field) => (
+                {["age","gender","phone","address","height","weight","status"].map((field) => (
                   <div key={field}>
                     <label className="block text-sm font-medium text-[#2e4856] mb-1 capitalize">
                       {field.replace("_", " ")}
@@ -141,7 +175,7 @@ function Profile() {
                       </select>
                     ) : (
                       <input
-                        type={["age", "height", "weight"].includes(field) ? "number" : "text"}
+                        type={["age","height","weight"].includes(field) ? "number" : "text"}
                         name={field}
                         value={profileData[field]}
                         onChange={handleInputChange}
@@ -166,6 +200,7 @@ function Profile() {
             </div>
           )}
 
+          {/* Reports Tab */}
           {activeTab === "reports" && (
             <div>
               <h2 className="text-xl font-semibold mb-4 text-[#2e4856]">Medical Reports</h2>
@@ -187,10 +222,7 @@ function Profile() {
                         <p className="font-medium">{report.name}</p>
                         <p className="text-sm text-gray-600">Uploaded: {report.date}</p>
                       </div>
-                      <button
-                        onClick={() => window.open(report.url)}
-                        className="text-blue-600 hover:text-blue-800"
-                      >
+                      <button onClick={() => window.open(report.url)} className="text-blue-600 hover:text-blue-800">
                         View
                       </button>
                       <button

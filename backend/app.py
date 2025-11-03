@@ -250,12 +250,25 @@ def predict_disease():
 
 @app.route('/health', methods=['GET'])
 def health_check():
-    """Health check endpoint"""
+    """Robust health check endpoint"""
+
+    # Check if the model is loaded
+    model_ok = model is not None
+    label_encoder_ok = label_encoder is not None
+    symptoms_ok = len(symptom_columns) > 0
+    disease_info_ok = len(disease_info) > 0
+
+    # Overall status
+    if all([model_ok, label_encoder_ok, symptoms_ok, disease_info_ok]):
+        status = 'healthy'
+    else:
+        status = 'unhealthy'
+
     return jsonify({
-        'status': 'healthy',
-        'model_loaded': model is not None,
-        'diseases_count': len(label_encoder.classes_) if label_encoder else 0,
-        'symptoms_count': len(symptom_columns)
+        'status': status,
+        'model_loaded': model_ok,
+        'label_encoder_loaded': label_encoder_ok,
+        'disease_info_loaded': disease_info_ok
     }), 200
 
 @app.route('/symptoms', methods=['GET'])

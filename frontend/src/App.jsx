@@ -9,6 +9,7 @@ import Profile from "./pages/Profile";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useAuth } from '@clerk/clerk-react';
+// import SystemHealth from "./pages/SystemHealth";
 
 function ProtectedRoute({ children }) {
   const { isSignedIn, isLoaded } = useAuth();
@@ -101,7 +102,14 @@ function App() {
             </ProtectedRoute>
           }
         />
-        
+        {/* <Route
+          path="/status"
+          element={
+            <ProtectedRoute>
+              <SystemHealth />
+            </ProtectedRoute>
+          }
+        /> */}
         {/* Catch all route */}
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
