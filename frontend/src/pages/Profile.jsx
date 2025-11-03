@@ -11,11 +11,11 @@ function Profile() {
     address: "",
     height: "",
     weight: "",
-    status: "", // User-defined status
+    status: "", 
   });
   const [isEditing, setIsEditing] = useState(false);
   const [reports, setReports] = useState([]);
-  const [systemHealth, setSystemHealth] = useState(null); // Full health info
+  const [systemHealth, setSystemHealth] = useState(null); 
 
   // Load local profile and reports
   useEffect(() => {
@@ -105,13 +105,13 @@ useEffect(() => {
                     systemHealth.status === "healthy" ? "bg-indigo-800" : "bg-red-600"
                   }`}
                 >
-                  System Status: {systemHealth.status === "healthy" ? "Healthy ✅" : "Unhealthy ❌"}
+                  System Status: {systemHealth.status === "healthy" ? "Working ✅" : "Not Working ❌"}
                 </span>
 
                 {/* Detailed info */}
                 <div className="mt-2 text-sm font-semibold text-gray-700 bg-gray-100 p-2 rounded-md w-max space-y-1">
-                  <p>Model Loaded: {systemHealth.model_loaded ? "✅ Yes" : "❌ No"}</p>
-                  <p>Disease Info Loaded: {systemHealth.disease_info_loaded ? "✅ Yes" : "❌ No"}</p>
+                  <p>Model Loaded: {systemHealth.model_loaded ? "✅ " : "❌ "}</p>
+                  <p>Disease Info Loaded: {systemHealth.disease_info_loaded ? "✅ " : "❌ "}</p>
                 </div>
               </div>
               )}
