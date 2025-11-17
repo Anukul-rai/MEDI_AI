@@ -8,48 +8,45 @@ import Appointments from "./pages/Appointment";
 import Profile from "./pages/Profile";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useAuth } from '@clerk/clerk-react';
-// import SystemHealth from "./pages/SystemHealth";
+import { useAuth0 } from '@auth0/auth0-react';
 
 function ProtectedRoute({ children }) {
-  const { isSignedIn, isLoaded } = useAuth();
+  const { isAuthenticated, isLoading } = useAuth0();
   
-  // Show loading while Clerk initializes
-  if (!isLoaded) {
+  if (isLoading) {
     return (
       <div className="flex justify-center items-center h-screen">
         <div>Loading...</div>
       </div>
     );
   }
-  
-  // Redirect to login if not signed in
-  if (!isSignedIn) {
+
+  if (!isAuthenticated) {
     return <Navigate to="/login" replace />;
   }
-  
+
   return children;
 }
 
-// Public Route Component (redirects to home if already signed in)
+// 🌐 PublicRoute Component
 function PublicRoute({ children }) {
-  const { isSignedIn, isLoaded } = useAuth();
-  
-  if (!isLoaded) {
+  const { isAuthenticated, isLoading } = useAuth0();
+
+  if (isLoading) {
     return (
       <div className="flex justify-center items-center h-screen">
         <div>Loading...</div>
       </div>
     );
   }
-  
-  // Redirect to home if already signed in
-  if (isSignedIn) {
-    return <Navigate to="/" replace />;
+
+  if (isAuthenticated) {
+    return <Navigate to="/dashboard" replace />;
   }
-  
+
   return children;
 }
+
 
 function App() {
   return (
@@ -58,8 +55,8 @@ function App() {
       <Routes>
         {/* Public routes */}
         <Route path="/" element={<HomePage />} />
-        
-        {/* Auth routes - redirect to home if already logged in */}
+
+        {/* Authentication routes */}
         <Route
           path="/login"
           element={
@@ -68,6 +65,7 @@ function App() {
             </PublicRoute>
           }
         />
+
         <Route
           path="/signup"
           element={
@@ -76,8 +74,7 @@ function App() {
             </PublicRoute>
           }
         />
-        
-        {/* Protected routes - require authentication */}
+        {/* Protected routes */}
         <Route
           path="/predict"
           element={
@@ -86,6 +83,7 @@ function App() {
             </ProtectedRoute>
           }
         />
+
         <Route
           path="/book"
           element={
@@ -94,6 +92,7 @@ function App() {
             </ProtectedRoute>
           }
         />
+
         <Route
           path="/profile"
           element={
@@ -102,17 +101,11 @@ function App() {
             </ProtectedRoute>
           }
         />
-        {/* <Route
-          path="/status"
-          element={
-            <ProtectedRoute>
-              <SystemHealth />
-            </ProtectedRoute>
-          }
-        /> */}
-        {/* Catch all route */}
+
+        {/* Catch-all redirect */}
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
+
       <ToastContainer />
     </>
   );

@@ -1,69 +1,56 @@
 import React, { useState } from "react";
-import { useSignIn, useClerk } from "@clerk/clerk-react";
+import { useAuth0 } from "@auth0/auth0-react"; // Import the Auth0 hook
 import { FcGoogle } from "react-icons/fc";
 import { FaApple, FaFacebook } from "react-icons/fa6";
 
-export default function Login() {
-  const { signIn, isLoaded, setActive } = useSignIn();
-  const { navigate } = useClerk();
+export default function LoginPage() {
+  const { loginWithRedirect, isAuthenticated, isLoading, user, error } = useAuth0();
   const [form, setForm] = useState({ email: "", password: "" });
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+  const [loginError, setLoginError] = useState("");
 
-  if (!isLoaded) return null;
-
+  // Email/password login (optional with Auth0, usually OAuth is preferred)
   const handleEmailLogin = async (e) => {
-  e.preventDefault();
-  setLoading(true);
-  setError("");
+    e.preventDefault();
+    setLoading(true);
+    setLoginError("");
 
-  try {
-    // Start sign in
-    const signInResult = await signIn.create({
-      identifier: form.email,
-      password: form.password,
-    });
-
-    if (signInResult.status === "complete") {
-      // Activate the session to log the user in
-      await setActive({ session: signInResult.createdSessionId });
-      window.location.href = "/Homepage"; // redirect after login
-    } else if (signInResult.status === "needs_email_verification") {
-      setError("Please verify your email before logging in.");
-    } else {
-      setError("Unexpected sign-in state. Please try again.");
-      console.log(signInResult);
-    }
-  } catch (err) {
-    console.error("Login error:", err.errors?.[0]?.message || err.message);
-    setError("Invalid email or password. Please try again.");
-  } finally {
-    setLoading(false);
-  }
-};
-
-  // Handle OAuth login
-  const handleOAuth = async (provider) => {
     try {
-      await signIn.authenticateWithRedirect({
-        strategy: provider,
-        redirectUrl: "/sso-callback",
-        redirectUrlComplete: "/Homepage",
+      // Handle login with Auth0's Universal Login page
+      await loginWithRedirect({
+        login_hint: form.email,
       });
     } catch (err) {
-      console.error("OAuth redirect error:", err);
+      console.error("Login error:", err);
+      setLoginError("Failed to log in. Please try again.");
+    } finally {
+      setLoading(false);
     }
   };
 
+  // OAuth login (Google, Apple, Facebook)
+  const handleOAuth = async (provider) => {
+    setLoginError("");
+    try {
+      // Trigger OAuth login redirect
+      await loginWithRedirect({
+        connection: provider, // Google, Apple, Facebook, etc.
+      });
+    } catch (err) {
+      console.error("OAuth login error:", err);
+      setLoginError("OAuth login failed. Please try again.");
+    }
+  };
+
+  if (isLoading) return <div>Loading...</div>; // Show loading state while Auth0 is determining authentication status
+
   return (
-    <div className="flex flex-col justify-center items-center bg-gradient-to-br from-[#e0d9d9] to-[#3d7db4] font-text px-4 py-15">
-      <div className="w-full max-w-md bg-white/80 backdrop-blur-sm shadow-lg shadow-gray-300 rounded-2xl p-8 space-y-6 border border-white/30">
+    <div className="flex flex-col justify-center items-center bg-indigo-100 font-text px-4 py-16 min-h-screen">
+      <div className="w-full max-w-md bg-[#365666] backdrop-blur-sm shadow-lg rounded-2xl p-8 space-y-6 border border-white/30">
         {/* Header */}
         <div className="text-center">
-          <h1 className="text-3xl font-bold text-[#1d1d22] mb-2">Welcome Back</h1>
-          <p className="text-sm text-[#279cd6] font-medium">
-            Sign in to your health hub, where your well-being is our priority!
-          </p>
+          <h1 className="text-3xl font-bold text-[#ffffff] mb-2">Welcome Back</h1>
+          <p className="text-sm text-[#ffffff] font-medium">Sign in to your health hub!</p>
         </div>
 
         {/* Email/Password Form */}
@@ -85,17 +72,13 @@ export default function Login() {
             required
           />
 
-          {error && (
-            <p className="text-red-500 text-sm text-center font-medium">{error}</p>
-          )}
+          {loginError && <p className="text-red-500 text-sm text-center font-medium">{loginError}</p>}
 
           <button
             type="submit"
             disabled={loading}
-            className={`w-full py-2 rounded-lg text-white font-semibold transition-all duration-300 ${
-              loading
-                ? "bg-gray-400 cursor-not-allowed"
-                : "bg-[#0699e2] hover:bg-[#1b7fb0]"
+            className={`w-full py-2 rounded-lg text-white font-semibold ${
+              loading ? "bg-gray-400 cursor-not-allowed" : "bg-[#0699e2] hover:bg-[#1b7fb0]"
             }`}
           >
             {loading ? "Signing in..." : "Login"}
@@ -105,14 +88,14 @@ export default function Login() {
         {/* OR Divider */}
         <div className="flex items-center justify-center gap-2">
           <span className="h-px w-20 bg-gray-300"></span>
-          <span className="text-gray-500 text-sm">or continue with</span>
+          <span className="text-gray-100 text-sm">or continue with</span>
           <span className="h-px w-20 bg-gray-300"></span>
         </div>
 
         {/* OAuth Buttons */}
         <div className="flex flex-col gap-3">
           <button
-            onClick={() => handleOAuth("oauth_google")}
+            onClick={() => handleOAuth("google")}
             className="flex items-center justify-center gap-2 bg-white border border-gray-300 hover:bg-gray-50 rounded-lg py-2 transition duration-200"
           >
             <FcGoogle size={20} />
@@ -120,7 +103,7 @@ export default function Login() {
           </button>
 
           <button
-            onClick={() => handleOAuth("oauth_apple")}
+            onClick={() => handleOAuth("apple")}
             className="flex items-center justify-center gap-2 bg-black text-white rounded-lg py-2 hover:bg-gray-900 transition duration-200"
           >
             <FaApple size={20} />
@@ -128,7 +111,7 @@ export default function Login() {
           </button>
 
           <button
-            onClick={() => handleOAuth("oauth_facebook")}
+            onClick={() => handleOAuth("facebook")}
             className="flex items-center justify-center gap-2 bg-white border border-gray-300 hover:bg-gray-50 rounded-lg py-2 transition duration-200"
           >
             <FaFacebook size={20} color="blue" />
@@ -137,7 +120,7 @@ export default function Login() {
         </div>
 
         {/* Footer */}
-        <div className="text-center text-sm text-[#365666] font-semibold">
+        <div className="text-center text-sm text-[#ffffff] font-semibold">
           Don’t have an account?{" "}
           <a
             href="/signup"

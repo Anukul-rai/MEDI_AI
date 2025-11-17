@@ -22,7 +22,7 @@ function HeroSection() {
           <span
             className="md:text-5xl text-3xl font-semibold"
           >
-            Disese-Predictor
+            Disease-Predictor
           </span>
           <h1
             className="md:text-2xl text-xs font-medium text-gray-500 "
